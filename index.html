@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Agri-Rail · Modular Autonomous Greenhouse Simulation</title>
 <style>
 :root{
@@ -14,7 +14,7 @@
 }
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;overflow:hidden;background:#0a1222;color:var(--tx);font-family:var(--sans);font-size:12.5px;-webkit-font-smoothing:antialiased}
-#gl{position:fixed;inset:0;width:100vw;height:100vh;display:block;touch-action:none;outline:none}
+#gl{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;outline:none}
 #ui{position:fixed;inset:0;pointer-events:none}
 #ui > *{pointer-events:auto}
 button{font:inherit;color:inherit;background:rgba(255,255,255,0.04);border:1px solid var(--line2);border-radius:7px;padding:6px 10px;cursor:pointer;white-space:nowrap;transition:background .15s,border-color .15s,color .15s}
@@ -109,7 +109,7 @@ button.mini{margin-left:auto;padding:3px 8px;font-size:10.5px}
 .nh div{display:flex;align-items:center;gap:6px}
 .nh span:last-child{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--mut)}
 .nh .sw,.sh .sw{width:8px;height:8px;border-radius:2px;display:inline-block}
-#selCard{position:absolute;left:350px;bottom:72px;width:372px;max-height:calc(100vh - 160px);overflow-y:auto;padding:10px 12px 12px}
+#selCard{position:absolute;left:350px;bottom:72px;width:372px;max-height:calc(100vh - var(--topb) - 104px);overflow-y:auto;padding:10px 12px 12px}
 #selCard .sh{display:flex;align-items:center;gap:8px;font-size:14px}
 #selCard .sid{font-family:var(--mono);font-size:11px;color:var(--mut)}
 #selCard .x{margin-left:auto;padding:0 8px;font-size:16px;line-height:24px}
@@ -191,7 +191,7 @@ button.mini{margin-left:auto;padding:3px 8px;font-size:10.5px}
 button.tog{padding:6px 9px}
 #expPop{position:absolute;top:calc(var(--topb) + 4px);right:10px;display:none;flex-direction:column;gap:5px;padding:10px;min-width:230px;max-width:280px;z-index:30}#expPop.show{display:flex}#expPop .lh{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin:0 0 3px 2px}#expPop button{text-align:left}#expPop .nt{font-size:10.5px;color:var(--dim);line-height:1.35;margin-top:3px;white-space:normal}
 .rscroll{overflow-x:auto}.rt.ctab{font-size:11px}.rt.ctab td,.rt.ctab th{white-space:normal;min-width:44px}.rt.ctab td:first-child{min-width:130px}
-#layersPop{position:absolute;bottom:72px;right:10px;display:none;flex-direction:column;gap:5px;padding:10px;min-width:210px}
+#layersPop{position:absolute;bottom:72px;right:10px;display:none;flex-direction:column;gap:5px;padding:10px;min-width:210px;z-index:30}
 #layersPop.show{display:flex}
 #layersPop .lh{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin:0 0 3px 2px}
 #layersPop button{text-align:left}
@@ -215,8 +215,8 @@ button.warnb.on{background:rgba(255,193,69,.2);border-color:rgba(255,193,69,.6)}
   html.printing #pvDoc{margin:0;max-width:none;box-shadow:none}
 }
 /* deploy overlay */
-#deploy{position:absolute;top:66px;left:50%;transform:translateX(-50%);width:min(520px,calc(100vw - 680px));min-width:300px;padding:12px 16px;transition:opacity .6s}
-#deploy.hide{opacity:0;pointer-events:none}
+#deploy{position:absolute;top:66px;left:50%;transform:translateX(-50%);width:min(520px,calc(100vw - 700px));min-width:300px;padding:12px 16px;transition:opacity .6s}
+#deploy.hide{opacity:0;pointer-events:none;visibility:hidden;transition:opacity .6s,visibility 0s .6s}
 #deploy .dh{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 #deploy .dh b{font-size:13px;letter-spacing:.04em}
 #deploy .dh span{font-family:var(--mono);color:var(--mut);font-size:11px}
@@ -264,7 +264,7 @@ button.wide{width:100%;margin-top:8px}
   .rt{display:block;overflow-x:auto;font-size:10.5px} .rt td,.rt th{padding:3px 5px} .rc canvas{height:150px} .kpi .kv{font-size:17px}
   #help .box{padding:14px}
 }
-#help{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(4,8,6,0.55)}
+#help{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(4,8,6,0.55);z-index:40}
 #help.show{display:flex}
 #help .box{width:min(760px,calc(100vw - 30px));max-height:calc(100vh - 40px);overflow:auto;padding:20px 22px}
 #help h2{margin:0 0 4px;font-size:18px;letter-spacing:.02em}
@@ -279,8 +279,8 @@ button.wide{width:100%;margin-top:8px}
 
 /* narrow screens */
 @media (max-width:1320px){ .brand small{display:none} #speed button{padding:6px 7px} }
-@media (max-width:1180px){ #left{display:none} #left.show{display:flex} #toggles{display:flex} #deploy{width:min(460px,calc(100vw - 380px));top:104px} }
-@media (max-width:780px){ #right{display:none;left:10px;width:auto} #right.show{display:flex} #left.show{right:10px;width:auto} .col{top:calc(var(--topb) + 42px)} #toggles{top:calc(var(--topb) + 6px)} #deploy{width:calc(100vw - 20px);top:calc(var(--topb) + 42px)} .brand small{display:none} .sys{min-width:0} #sysTxt{display:none} #top{gap:8px} #help .cols{grid-template-columns:1fr} }
+@media (max-width:1180px){ #left{display:none} #left.show{display:flex} #toggles{display:flex} #tRight{display:none} #deploy{left:auto;right:360px;transform:none;width:min(460px,calc(100vw - 380px));top:104px} }
+@media (max-width:780px){ #right{display:none;left:10px;width:auto} #right.show{display:flex} #tRight{display:block} #left.show{right:10px;width:auto} .col{top:calc(var(--topb) + 42px)} #toggles{top:calc(var(--topb) + 6px)} #deploy{right:10px;width:calc(100vw - 20px);top:calc(var(--topb) + 42px)} .brand small{display:none} .sys{min-width:0} #sysTxt{display:none} #top{gap:8px} #help .cols{grid-template-columns:1fr} }
 @media (max-width:520px){
   .brand > div{display:none} .brand{order:1}
   #top{height:auto;flex-wrap:wrap;gap:6px;row-gap:6px;padding:6px 8px;left:6px;right:6px;top:6px}
@@ -291,26 +291,35 @@ button.wide{width:100%;margin-top:8px}
   .col{bottom:60px} #left.show,#right.show{left:6px;right:6px} #selCard{left:6px;right:6px;bottom:60px}
   #layersPop{bottom:60px;right:6px} #expPop{right:6px}
 }
+@media (min-width:521px){ #speed{flex:none} .brand > div{min-width:0} }
+@media (max-width:1600px){ .clim{display:none} }
+@media (max-width:1240px){ #sysTxt{display:none} .sys{min-width:0} }
+@media (max-width:1060px) and (min-width:521px){
+  .brand > div{display:none} #top{height:auto;flex-wrap:wrap;row-gap:6px;padding:6px 10px} .clock{flex:1 1 auto;min-width:0}
+  #speed{order:4} .sys{order:4} #expBtn,#sysBtn,#helpBtn{order:5} .wl{display:none} .nl{display:inline}
+  .col{top:calc(var(--topb) + 42px)} #toggles{top:calc(var(--topb) + 6px)} #deploy{top:calc(var(--topb) + 42px)}
+}
 @media (max-height:520px) and (min-width:521px){
   .brand > div{display:none} #sysTxt{display:none} .sys{min-width:0} #top{gap:10px}
-  #left,#right{display:none} #left.show,#right.show{display:flex} #toggles{display:flex;top:calc(var(--topb) + 6px)}
-  .col{top:calc(var(--topb) + 42px);bottom:66px} #right.show{width:340px} #pip{height:130px} #deploy{top:calc(var(--topb) + 42px)}
+  #left,#right{display:none} #left.show,#right.show{display:flex} #toggles{display:flex;top:calc(var(--topb) + 6px)} #tRight{display:block}
+  .col{top:calc(var(--topb) + 42px);bottom:66px} #right.show{width:340px;overflow-y:auto} #right.show > *{flex-shrink:0} #pip{height:130px} #deploy{top:calc(var(--topb) + 42px)}
   #selCard{left:10px;max-height:calc(100vh - var(--topb) - 80px)}
 }
+@media (pointer:coarse){select,.rctl select{font-size:16px}}
 </style>
 </head>
 <body>
-<canvas id="gl" tabindex="0"></canvas>
+<canvas id="gl" tabindex="-1" role="img" aria-label="3D greenhouse view"></canvas>
 <div id="ui">
   <header id="top" class="panel">
     <div class="brand"><span class="logo"></span><div><b>AGRI-RAIL</b><small>Modular autonomous hoop house · two-arm rail robot · AI vision</small></div></div>
     <div class="clock"><span id="sunIcon"></span><span id="clk">Day 1 · 07:30</span><span id="clim" class="clim"></span></div>
     <button id="bal" title="Farm balance: the investment, then everything sold and the food the household eats from the farm (at grocery prices), less everything bought and an upkeep reserve. Opens the money section of the report."><span id="balV">—</span><span id="balS">investment</span></button>
-    <div class="seg" id="speed"><button data-s="0" title="Pause (space)">❚❚</button><button data-s="1" title="Real time">1×</button><button data-s="30" title="30× real time — robots shown in full">30×</button><button data-s="900" title="15 minutes per second (time-lapse)">15m/s</button><button data-s="7200" title="2 hours per second">2h/s</button><button data-s="21600" title="6 hours per second">6h/s</button><button data-s="86400" title="1 day per second — fastest that still shows each night">1d/s</button></div>
+    <div class="seg" id="speed"><button data-s="0" title="Pause (space)" aria-label="Pause">❚❚</button><button data-s="1" title="Real time">1×</button><button data-s="30" title="30× real time — robots shown in full">30×</button><button data-s="900" title="15 minutes per second (time-lapse)">15m/s</button><button data-s="7200" title="2 hours per second">2h/s</button><button data-s="21600" title="6 hours per second">6h/s</button><button data-s="86400" title="1 day per second — fastest that still shows each night">1d/s</button></div>
     <div class="sys"><span id="sysDot" class="dot"></span><span id="sysTxt">Packed</span></div>
     <button id="expBtn" title="Download everything the simulation uses and produces">Export ▾</button>
     <button id="sysBtn" title="Self-sufficiency report: sizing, energy, water, nutrients, costs"><span class="wl">System report</span><span class="nl">Report</span></button>
-    <button id="helpBtn" title="About & controls">?</button>
+    <button id="helpBtn" title="About & controls" aria-label="About and controls">?</button>
   </header>
 
   <aside id="left" class="col">
@@ -366,9 +375,9 @@ button.wide{width:100%;margin-top:8px}
     <div id="depFoot"><span id="depNote">5 crates · 3.0 × 1.25 × 2.25 m each · fits one 40 ft flatbed</span><button id="depSkip">Skip</button></div>
   </div>
 
-  <div id="report">
+  <div id="report" role="dialog" aria-labelledby="rTitle" tabindex="-1">
     <div class="rbox panel">
-      <div class="rhead"><h2>Self-sufficiency report</h2><button class="x" id="rClose">Close</button></div>
+      <div class="rhead"><h2 id="rTitle">Self-sufficiency report</h2><button class="x" id="rClose">Close</button></div>
       <div class="rctl">
         <label>Site <select id="rLoc"></select></label>
         <label>Greenhouse heat <select id="rHeat"></select></label>
@@ -387,18 +396,18 @@ button.wide{width:100%;margin-top:8px}
     </div>
   </div>
 
-  <div id="help">
+  <div id="help" role="dialog" aria-labelledby="helpTitle" tabindex="-1">
     <div class="box panel">
       <button class="x" id="helpClose">Close</button>
-      <h2>Agri-Rail · concept simulation</h2>
+      <h2 id="helpTitle">Agri-Rail · concept simulation</h2>
       <p>A standard hoop house built from bolt-together 3 m bays. A heavy ridge rail runs down the centre line; two arms ride it on carriages — each with a yaw joint, a telescoping Z mast, shoulder, elbow and a 3-axis wrist, so it can reach every corner of the bay. Each wrist carries an RGB-NIR camera and a low-power laser, and docks tools from racks in the core bay: soft gripper with pouch, weed extractor, irrigation wand, precision seeder and cradle pads. Fixed dome cameras on the hoops scan every bay. The AI turns detections into a prioritised task queue, assigns them to the arm whose half of the rail they fall in, verifies low-confidence targets with the wrist camera before acting, and calls both arms together for loads over the single-arm payload.</p>
       <p><b>Growth from bare soil.</b> The beds start empty. Once the system is online the arms transplant, sow and plant seed pieces; lettuce goes in one column every few days so heads come in steadily. You can watch seedlings emerge and grow, crops flower before they set fruit, and fruit size up and colour before harvest. Click any plant (or bare spot) to see its stage, development, next harvest, stress and yield so far. Click the battery, solar array, cistern, cold store, dehydrator, compost bins, tiny house, heater, fans, weather mast, AI cabinet, an arm or a bed's frame to see its status now and an hourly history chart (48 h, 30 days, a year or everything).</p>
-      <p><b>Site &amp; weather.</b> Pick a site in the <b>System report</b> — Nairobi, Miami, Phoenix, Little Rock, Seattle, Minneapolis or Anchorage. Weather follows that station's 1991–2020 normals with random warm and cold spells, wet and dry runs, rain or snow, wind and the odd storm; the sun follows the real latitude and calendar. Snow piles up on the ground, the arches and the solar panels; heavy roof snow is melted off or slides. Wind above 12 m/s closes the sides. Inside, the AI opens the roll-up sides, then runs exhaust fans; on hot afternoons it pulls air through wet pads and draws a shade cloth. The frost heater (heat pump or propane) only holds what the crops in the beds need — 5 °C for tender crops, just above freezing for greens, nothing when the house is empty. Temperature and daylight drive development: cool or dark days slow growth, heat stresses crops and makes tomato, pepper and pumpkin flowers drop.</p>
+      <p><b>Site &amp; weather.</b> Pick a site in the <b>System report</b> — Nairobi, Miami, Phoenix, Little Rock, Seattle, Minneapolis or Anchorage. Weather follows that station's 1991–2020 normals with random warm and cold spells, wet and dry runs, rain or snow, wind and the odd storm; the sun follows the real latitude and calendar. Snow piles up on the ground, the arches and the solar panels; heavy roof snow is melted off or slides. Wind above 12 m/s closes the sides. Inside, the AI opens the roll-up sides, then runs exhaust fans; on hot afternoons it pulls air through wet pads and draws a shade cloth. The frost heater (heat pump or propane) only holds what the crops in the beds need — 3 °C above the frost-damage point of the most tender crop in the beds, at most 5 °C (4–5 °C for tomatoes, peppers, beans, pumpkins, basil and sweet potatoes, 0 °C for lettuce, −3 °C for kale alone), nothing when the house is empty. Temperature and daylight drive development: cool or dark days slow growth, heat stresses crops and makes tomato, pepper and pumpkin flowers drop.</p>
       <p><b>Planting calendar.</b> Before the run starts, the greenhouse model is run over a normal year at the chosen site and every crop is "grown on paper" from each possible planting day. Days where frost, cold, winter darkness or summer heat would not cut it far below its best form that crop's window (Crops tab). Crops that can't grow at a site are swapped for one that can, and a bed whose main crop is out of season grows a quick rotation crop in between.</p>
       <p><b>Living off it.</b> The farm is sized before day 1 to feed one person from year 2 on: every bed is grown through two normal years of the site's weather and the harvest is replayed through the store (roots are dried before they go soft, beans keep two years), plus a 10 % margin; a worse year is topped up with bought rice and beans, which is counted. The answer is a number of identical houses of up to 8 grow bays; house 1 is simulated plant by plant and houses 2+ repeat its plan. At the end of year 1 the owner compares the harvest with the plan and adds houses if it fell short. The only food bought in steady state is cooking oil (the crops lack fat) and supplements (B12, vitamin D, and calcium + zinc when the crops fall short); rice and beans bridge the first months while the store is empty. The owner lives in the tiny house beside the greenhouses (<b>Person enters</b> walks them over). Everything is metered: a PV array and LiFePO4 battery — sized against three synthetic years of the site's weather — supply the greenhouses, robots, nursery, storage and the house; roofs drain to a cistern; greywater goes back on the beds; spent plants, weeds, scraps and composting-toilet solids are composted and urine is used as fertilizer. The <b>System report</b> charts needs met, harvest, food in store, energy, battery and water over time, checks the sizing against the simulation, and lists every outside input with its cost and source. <b>Simulate 1 year</b> runs a whole year in a minute or two.</p>
       <p><b>Fish, chickens and switches.</b> A 5 m³ tilapia pool in a small pond house and a five-hen coop sit west of the greenhouses. Fish and eggs go into the diet, the pool water fertilizes the beds and the manure goes to the compost; their feed is bought. Every component in the <b>Components</b> panel — fish pool, chickens, dehydrator, recycling, rain catchment, solar + battery, solar-first scheduling, wind turbines, seed saving, waste to animals, surplus sales — can be switched on or off at any time (also from its card or the report). Each switch is logged and drawn as a dashed line on every history chart, so the effect on diet, purchases, fertilizer, water and energy shows over time; <b>Apply &amp; restart</b> re-sizes the farm with the set that is on.</p>
       <p><b>Money.</b> The balance in the header starts at minus the farm's build cost (DIY parts; the tiny house is the household's home and isn't counted). Every simulated day adds the food sold and the food eaten from the farm at grocery prices, and takes off everything bought plus an upkeep reserve for film, shade cloth, pads, battery, inverter and robot parts. After a full year the report projects the break-even at the last 12 months' rate and charts money out against money in. <b>Market houses</b> (report → Grown for sale) are extra greenhouses planted with tomatoes, peppers, lettuce, kale and basil only for sale; they add build cost, energy, water, seed and fertilizer, and most of the income.</p>
-      <p><b>Closing the loop.</b> <b>Seed saving</b>: when a crop's seed bank is short, a few lettuce, kale and basil plants are left to bolt and set seed (an arm brushes the kale and basil flowers, then cuts the dry stalks for the seed tray); seed comes from one ripe tomato truss, pepper and pumpkin a year, and the plumpest beans, small seed potatoes and a few sweet-potato roots are held back at harvest. <b>Waste to animals</b>: the arms sort what they clear — leafy residue, weeds and trimmings go to the hens and the fish pool, scraps and food past its date to a soldier-fly bin whose larvae replace part of the bought feed; manure, pool water and frass carry the nutrients back to the beds. <b>Sell surplus</b>: storage is limited, so food beyond what the plan says the house needs until the next harvests (plus a month), or that won't be eaten before it spoils, is bagged by the arms into crates for a weekly farm-stand pickup; the income is netted against the outside inputs.</p>
+      <p><b>Closing the loop.</b> <b>Seed saving</b>: when a crop's seed bank is short, a few lettuce, kale and basil plants are left to bolt and set seed (an arm brushes the kale and basil flowers, then cuts the dry stalks for the seed tray); seed comes from one ripe tomato truss, pepper and pumpkin a year, and the plumpest beans, small seed potatoes and a few sweet-potato roots are held back at harvest. <b>Waste to animals</b>: the arms sort what they clear — leafy residue, weeds and trimmings go to the hens and the fish pool, scraps and food past its date to a soldier-fly bin whose larvae replace part of the bought feed; manure, pool water and frass carry the nutrients back to the beds. <b>Sell surplus</b>: storage is limited, so food beyond what the plan says the house needs until the next harvests (plus six weeks, and never less than 120 days' worth), or that won't be eaten before it spoils, is bagged by the arms into crates for a weekly farm-stand pickup; the income is netted against the outside inputs.</p>
       <p><b>Battery, scheduling and wind.</b> In sunshine the panels run the farm directly; the battery is there for the dark hours and cloudy spells. With <b>solar-first scheduling</b> on, flexible loads wait for the sun: the dehydrator, nursery lights and water heater run by day, the cold store pre-cools by day and coasts at night, the fish pool is warmed to 28.5 °C by day and allowed to drift to ~24 °C overnight, the central computer sleeps after dark and the circulation fans cycle. That roughly halves what the battery must carry. Everything is sized for the lowest 20-year cost, not to be failsafe: for each share of the load a small backup generator may cover (0–15 %), the sizing finds the cheapest PV + battery over three synthetic years, adds the generator and its fuel, and keeps the cheapest. It also tries a water-tote heat store and 1–6 homebrew wind turbines and keeps them only if they lower the total. The cistern is chosen the same way: tank cost against 20 years of the water still bought. Wind pays only at windy, cloudy sites; you can force a number under <b>Wind turbines</b> in the report.</p>
       <p><b>Export.</b> <b>Export ▾</b> (top bar) or the buttons in the System report download everything the simulation uses and produces: site climate, crop and animal parameters, nutrition per 100 g, diet targets, prices and sources, the crop table (time to harvest, yield and calories), sizing, monthly results and the full daily log, energy, water, nutrients, compost, costs and the robotics parts list. <b>Print / save as PDF</b> lays it out for paper (the daily log stays in the spreadsheet); <b>Spreadsheet</b> writes an .xlsx with one sheet per table.</p>
       <p><b>Real growing times.</b> Crops grow on the true calendar: lettuce is ready about 40 days after transplant, potatoes at about 100 days, tomatoes give their first truss at about 70 days and keep cropping for months. Every harvest is weighed. At 1× and 30× you watch the robots in real time; above that the sim runs as a time-lapse (up to a day per second, so every night is still shown) and robot work the arms can't show on screen is completed at the pace two arms could really manage. The <b>Diet</b> tab feeds one person from the stores every evening and tracks intake against their Dietary Reference Intakes; the <b>Crops</b> tab lists each crop's timing, yield and sources.</p>
@@ -521,6 +530,17 @@ function makeLabel(text, opt = {}) {
   s.layers.set(1);   // overlay layer: visible to operator camera only, not to robot cameras
   return s;
 }
+/* free the GPU side of a detached object tree: geometries, materials and their maps.
+   Shared ones (GEO, M, plant geometry, …) are kept, and so is the one quad three.js gives every Sprite. */
+function disposeTree(root) {
+  const keep = new Set([...Object.values(GEO), ...Object.values(M), ...Object.values(PG).flat(), ...Object.values(STALK_GEO).flatMap(s => [s.stem, s.heads]), ...Object.values(_cropMats), filmMatBase, moundMat, WFX.roofMat]);
+  const free = o => { if (!o || keep.has(o)) return; if (o.map) o.map.dispose(); o.dispose(); };
+  root.traverse(o => {
+    if (!o.isSprite) free(o.geometry);
+    [].concat(o.material || []).forEach(free);
+    if (o.isInstancedMesh) o.dispose();   // its instance-matrix buffer
+  });
+}
 
 /* ============================================================
    GLOBAL STATE
@@ -554,7 +574,7 @@ function clockStr(withSec) {
 }
 let START_DATE = new Date(2026, 1, 1);      // season start (set from the site in 05-location.js)
 let START_DOY = 32, LAT = 35 * DEG;
-function dateAt(t) { return new Date(START_DATE.getTime() + Math.floor(t / S.DAY + 7.5 / 24) * 86400000); }
+function dateAt(t) { return new Date(START_DATE.getFullYear(), START_DATE.getMonth(), START_DATE.getDate() + Math.floor(t / S.DAY + 7.5 / 24)); }
 function dateStr(t = S.t) { return dateAt(t).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }); }
 function doyAt(t = S.t) { return START_DOY + t / S.DAY + 7.5 / 24; }
 function solarDecl(doy) { return 23.44 * DEG * Math.sin(TAU * (284 + doy) / 365); }
@@ -588,7 +608,7 @@ const DESIGN = { loc: 'littlerock', heat: 'hp', recycle: true, cover: null, plan
 (function readHash() {
   try {
     const q = new URLSearchParams(location.hash.slice(1));
-    if (LOCATIONS[q.get('loc')]) DESIGN.loc = q.get('loc');
+    if (Object.prototype.hasOwnProperty.call(LOCATIONS, q.get('loc'))) DESIGN.loc = q.get('loc');
     if (['hp', 'propane', 'none'].includes(q.get('heat'))) DESIGN.heat = q.get('heat');
     if (q.get('recycle') === '0') DESIGN.recycle = false;
     for (const k of ['fish', 'hens', 'dryer', 'rain', 'solar', 'sched', 'wind', 'seeds', 'waste', 'sell']) if (q.get(k) === '0') DESIGN[k] = false;
@@ -652,7 +672,7 @@ scene.fog = new THREE.Fog(SKY_DAY.clone(), 90, 300);
 const camera = new THREE.PerspectiveCamera(42, innerWidth / innerHeight, 0.05, 600);
 
 const hemi = new THREE.HemisphereLight(0xdcecff, 0x56613f, 0.75); scene.add(hemi);
-const growLight = new THREE.HemisphereLight(0xc48cf0, 0x2a2238, 0); scene.add(growLight);
+const growLight = new THREE.HemisphereLight(0x9aaccc, 0x262a34, 0); scene.add(growLight);   // neutral night fill; the bays have no modelled grow lights
 const sun = new THREE.DirectionalLight(0xfff2dc, 2.3);
 sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048);
 sun.shadow.bias = -0.0005; sun.shadow.normalBias = 0.02;
@@ -692,7 +712,7 @@ const filmMatBase = new THREE.MeshStandardMaterial({ color: 0xe6f3f7, transparen
 
 /* ---------- ground & surroundings ---------- */
 (function buildEnvironment() {
-  const g = new THREE.PlaneGeometry(700, 700, 80, 80); g.rotateX(-Math.PI / 2);
+  const g = new THREE.PlaneGeometry(2000, 2000, 230, 230); g.rotateX(-Math.PI / 2);
   const col = new Float32Array(g.attributes.position.count * 3), base = new THREE.Color(0x587a38), c2 = new THREE.Color();
   for (let i = 0; i < g.attributes.position.count; i++) {
     const x = g.attributes.position.getX(i), z = g.attributes.position.getZ(i);
@@ -716,7 +736,7 @@ const filmMatBase = new THREE.MeshStandardMaterial({ color: 0xe6f3f7, transparen
   const leaves = new THREE.InstancedMesh(leafG, MS({ color: 0x3c6236, roughness: 0.9 }), n);
   const m = new THREE.Matrix4(), q = new THREE.Quaternion();
   for (let i = 0; i < n; i++) {
-    let x, z; do { x = rand(-200, 260); z = rand(-200, 200); } while (x > -45 && x < 150 && Math.abs(z) < 90);
+    let x, z; do { x = rand(-200, 260); z = rand(-200, 200); } while (x > -45 && x < 290 && Math.abs(z) < 90);
     const s = rand(0.7, 1.6);
     m.compose(V3(x, 0, z), q.setFromAxisAngle(UP, rand(0, TAU)), V3(s, s * rand(0.85, 1.25), s));
     trunks.setMatrixAt(i, m); leaves.setMatrixAt(i, m);
@@ -726,7 +746,7 @@ const filmMatBase = new THREE.MeshStandardMaterial({ color: 0xe6f3f7, transparen
   scene.add(trunks, leaves);
   // distant hills
   const hillM = MS({ color: 0x5f7d55, roughness: 1 });
-  [[-180, -60, 90, 22], [120, -170, 120, 30], [190, 80, 100, 20], [-60, 200, 140, 26]].forEach(([x, z, r, h]) => {
+  [[-180, -60, 90, 22], [120, -170, 120, 30], [190, 105, 100, 20], [-60, 200, 140, 26]].forEach(([x, z, r, h]) => {
     const hg = new THREE.SphereGeometry(1, 24, 12); const hm = new THREE.Mesh(hg, hillM);
     hm.scale.set(r, h, r * 0.7); hm.position.set(x, -2, z); scene.add(hm);
   });
@@ -746,6 +766,7 @@ function setView(mode) {
   if (mode === 'inside') { orbit.gt.set(0, 1.5, (L.z0 - 1.5) / 2); orbit.gr = 7.2; orbit.gph = 1.2; orbit.gth = 1.0; }
   if (mode === 'followA' || mode === 'followB') { orbit.gr = 5.5; orbit.gph = 1.0; }
   if (mode === 'cinematic') { orbit.gt.set(0, 1.4, (L.z0 + L.z1) / 2); orbit.gr = Math.max(18, (L.z1 - L.z0) * 1.0); orbit.gph = 1.18; }
+  orbit.gth = orbit.th + angDiff(orbit.th, orbit.gth);   // nearest way round, not back through every turn built up
   if (typeof UI !== 'undefined') UI.syncViewButtons();
 }
 function updateCamera(dt) {
@@ -757,18 +778,19 @@ function updateCamera(dt) {
   const k = 1 - Math.exp(-dt * 7);
   orbit.tgt.lerp(orbit.gt, k);
   orbit.r = lerp(orbit.r, orbit.gr, k); orbit.th = lerp(orbit.th, orbit.gth, k); orbit.ph = lerp(orbit.ph, orbit.gph, k);
+  scene.fog.near = Math.max(90, orbit.r - 20); scene.fog.far = Math.max(300, orbit.r + 260); const cf = Math.max(600, scene.fog.far + 40), cn = Math.max(0.05, (orbit.r - 140) * 0.005); if (camera.far !== cf || camera.near !== cn) { camera.far = cf; camera.near = cn; camera.updateProjectionMatrix(); }   // a wide farm's Top view stays clear of fog
   const sp = Math.sin(orbit.ph);
   camera.position.set(orbit.tgt.x + orbit.r * sp * Math.sin(orbit.th), orbit.tgt.y + orbit.r * Math.cos(orbit.ph), orbit.tgt.z + orbit.r * sp * Math.cos(orbit.th));
   if (camera.position.y < 0.3) camera.position.y = 0.3;
   camera.lookAt(orbit.tgt);
 }
 (function controls() {
-  const ptrs = new Map(); let pinch = null;
+  const ptrs = new Map(); let pinch = null; const maxR = () => Math.max(140, ((nGH() - 1) * PITCH + 2 * GH.HW) * 2);
   const panBy = (dx, dy) => {
     const k = orbit.r * 0.0016;
     const rx = Math.cos(orbit.th), rz = -Math.sin(orbit.th), fx = -Math.sin(orbit.th), fz = -Math.cos(orbit.th);
     orbit.gt.x += -dx * k * rx + dy * k * fx; orbit.gt.z += -dx * k * rz + dy * k * fz;
-    orbit.gt.x = clamp(orbit.gt.x, -40, 40); orbit.gt.z = clamp(orbit.gt.z, -60, 60);
+    orbit.gt.x = clamp(orbit.gt.x, -40, Math.max(40, (nGH() - 1) * PITCH + 20)); orbit.gt.z = clamp(orbit.gt.z, -60, 60);
     if (orbit.mode !== 'orbit') { orbit.mode = 'orbit'; UI.syncViewButtons(); }
   };
   canvas.addEventListener('contextmenu', e => e.preventDefault());
@@ -796,18 +818,18 @@ function updateCamera(dt) {
       const [a, b] = [...ptrs.values()];
       p.x = e.clientX; p.y = e.clientY;
       const d = Math.hypot(a.x - b.x, a.y - b.y), mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
-      if (pinch) { orbit.gr = clamp(orbit.gr * pinch.d / Math.max(d, 1), 2.5, 140); panBy(mx - pinch.mx, my - pinch.my); }
+      if (pinch) { orbit.gr = clamp(orbit.gr * pinch.d / Math.max(d, 1), 2.5, maxR()); panBy(mx - pinch.mx, my - pinch.my); }
       pinch = { d, mx, my };
       return;
     }
     p.x = e.clientX; p.y = e.clientY;
   });
   const up = e => {
-    if (e.type === 'pointerup' && tap && tap.id === e.pointerId && performance.now() - tap.t < 600 && typeof onCanvasTap === 'function') onCanvasTap(e.clientX, e.clientY);
+    if (e.type === 'pointerup' && tap && tap.id === e.pointerId && performance.now() - tap.t < 600 && typeof onCanvasTap === 'function') { onCanvasTap(e.clientX, e.clientY); if (e.pointerType !== 'mouse') { orbit.tapT = performance.now(); orbit.tapX = e.clientX; orbit.tapY = e.clientY; } }
     tap = null; ptrs.delete(e.pointerId); pinch = null;
   };
   canvas.addEventListener('pointerup', up); canvas.addEventListener('pointercancel', up);
-  canvas.addEventListener('wheel', e => { e.preventDefault(); orbit.gr = clamp(orbit.gr * Math.exp(e.deltaY * 0.0011), 2.5, 140); }, { passive: false });
+  canvas.addEventListener('wheel', e => { e.preventDefault(); orbit.gr = clamp(orbit.gr * Math.exp(e.deltaY * 0.0011), 2.5, maxR()); }, { passive: false });
 })();
 
 /* ---------- day / night (real solar geometry, seasonal day length) ---------- */
@@ -841,9 +863,9 @@ function updateSky() {
   hemi.color.setHSL(0.6, 0.5 - 0.3 * cloud, 0.55 + 0.3 * sa);
   const night = 1 - sa;
   STARS.material.opacity = clamp((0.6 - sa) / 0.6, 0, 1) * (1 - cloud) * 0.9;
-  STARS.position.set(camera.position.x, 0, camera.position.z);
+  STARS.position.set(camera.position.x, Math.max(0, camera.position.y - 20), camera.position.z);   // stay above a camera zoomed out high over a wide farm
   growLight.intensity = night * 0.26 * (S.mode === 'running' ? 1 : 0.2);
-  M.led.emissiveIntensity = night * 1.8 * (S.mode === 'running' ? 1 : 0.1);
+  M.led.emissiveIntensity = 0;   // bay light bars stay off: no greenhouse lighting load or supplemental DLI is modelled
   renderer.toneMappingExposure = 1.0 + night * 0.35;
 }
 
@@ -1373,7 +1395,7 @@ const PITCH = GH.HW * 2 + 2.8;   // house spacing, m (2.8 m service lane between
 const REP = { group: null, key: '', canopies: [], t: 0, mats: {} };
 function houseX(k) { return k * PITCH; }
 function buildReplicas() {
-  if (REP.group) { scene.remove(REP.group); }
+  if (REP.group) { scene.remove(REP.group); disposeTree(REP.group); }
   const g = REP.group = new THREE.Group(); scene.add(g); REP.canopies = []; REP.snow = [];
   const mods = G.modules.filter(m => !m.removing);
   REP.key = FARM.houses + '|' + FARM.market + '|' + mods.map(m => m.id).join(',');
@@ -1405,11 +1427,11 @@ function buildReplicas() {
         mg.add(boxMesh(1.9, 1.5, 1.8, M.stainless, 2.2, 0.75, GH.ML / 2));
         mg.add(boxMesh(1.96, 0.85, 1.36, M.galv, 0, 0.42, GH.ML / 2));
       }
-      if (m.kind === 'grow' && isOutermost(m)) {
-        const ew = new THREE.Mesh(GEO.endWall, filmMat); ew.renderOrder = 5; ew.position.z = m.wing === 'A' ? 0 : GH.ML; mg.add(ew);
+      if (m.kind === 'grow') {   // shown on whichever bay is outermost (farmVisuals)
+        const ew = new THREE.Mesh(GEO.endWall, filmMat); ew.renderOrder = 5; ew.position.z = m.wing === 'A' ? 0 : GH.ML; ew.visible = false; mg.add(ew); mg.userData.end = ew;
       }
     }
-    const lab = makeLabel(mkt ? `MARKET HOUSE ${k - FARM.houses + 1} · grown for sale` : `HOUSE ${k + 1} · same plan as house 1`, { scale: 0.16 }); lab.position.set(0, GH.RIDGE + 0.9, (ghBounds().z0 + ghBounds().z1) / 2); hg.add(lab);
+    const lab = makeLabel(mkt ? `MARKET HOUSE ${k - FARM.houses + 1} · grown for sale` : `HOUSE ${k + 1} · same plan as house 1`, { scale: 0.16 }); lab.position.set(0, GH.RIDGE + 0.9, (Math.min(...mods.map(o => o.z0)) + Math.max(...mods.map(o => o.z1))) / 2); hg.add(lab);
   }
 }
 const _cropMats = {};
@@ -1423,6 +1445,7 @@ function farmVisuals(rdt) {
   for (const hg of REP.group.children) for (const mg of hg.children) if (mg.userData.module) {
     const m = mg.userData.module; mg.visible = m.build > 0.55;
     if (mg.userData.film) mg.userData.film.visible = S.showCover;
+    if (mg.userData.end) mg.userData.end.visible = isOutermost(m);
   }
   if (REP.film) REP.film.opacity = 0.15 * (S.showCover ? 1 : 0);
   for (const s of REP.snow) { s.material = WFX.roofMat || s.material; s.visible = !!(WFX.roofMat && WFX.roofMat.opacity > 0.02); }
@@ -1491,7 +1514,7 @@ function outsideAt(t) {
   let c = lerp(w0.c, w1.c, fr);
   const doy = doyAt(t), amp = normalDTR(doy) / 2 * (1 - 0.5 * c);
   let T = normalMean(doy) + a + amp * Math.cos(TAU * (h - 15) / 24);
-  let precip = w0.wet && h >= w0.start && h < w0.start + w0.dur ? w0.mm / w0.dur : 0;
+  const wp = wxDay(di - 1); let precip = (w0.wet && h >= w0.start && h < w0.start + w0.dur ? w0.mm / w0.dur : 0) + (wp.wet && h + 24 < wp.start + wp.dur ? wp.mm / wp.dur : 0);   // plus the tail of yesterday's storm that ran past midnight
   let wind = Math.max(0.3, lerp(w0.wind, w1.wind, fr) * (0.75 + 0.35 * Math.sin(TAU * (h - 9) / 24)));
   const F = CLIMATE.force;
   if (F && t < F.until) { const k = clamp((t - F.from) / 21600, 0, 1) * clamp((F.until - t) / 21600, 0, 1); T += (F.dT || 0) * k; if (F.T != null) T = lerp(T, F.T + amp * 0.4 * Math.cos(TAU * (h - 15) / 24), k); if (F.cloud != null) { c = lerp(c, F.cloud, k); if (F.cloud < 0.2) precip = 0; } if (F.wind) wind = lerp(wind, F.wind, k); if (F.precip) { precip = F.precip * k; c = Math.max(c, 0.9 * k); } }
@@ -1553,7 +1576,7 @@ function climateStep(dt, t = S.t) {
   const num0 = Qs + CL_SOIL * C.Ts - R + (U + Gn) * C.Tout + Gf * supply, den = CL_SOIL + U + Gn + Gf;
   /* modulating heater: just enough output to hold the target (warmer when heavy snow must be melted off the film) */
   const target = C.roofSnow > 6 && C.setHeat > -5 ? Math.max(C.setHeat + 1, 3) : C.setHeat + 1;   // melt heavy snow off the film while crops are inside; an empty house just sheds it
-  if (C.heaterOn && C.Tin < target + 0.5) { const need = (target * den - num0) / CL_HEAT_W; C.heat = need > 0 ? clamp(need, 0.03, 1) : 0; } else C.heat = 0;
+  if (C.heaterOn && DESIGN.heat !== 'none' && C.Tin < target + 0.5) { const need = (target * den - num0) / CL_HEAT_W; C.heat = need > 0 ? clamp(need, 0.03, 1) : 0; } else C.heat = 0;
   const Teq = (num0 + C.heat * CL_HEAT_W) / den; C.lastNum0 = num0; C.lastDen = den;
   C.Tin += (Teq - C.Tin) * (1 - Math.exp(-dt / 900));
   const deep = SITE.tMean;
@@ -1581,8 +1604,9 @@ function climateSpinup() {   // run two days before the start so soil and air te
   const C = CLIMATE; C.Ts = normalMean(START_DOY) + 3; C.Tin = outsideAt(-2 * 86400).T + 2;
   for (let t = -2 * 86400; t < 0; t += 300) climateStep(300, t);
 }
-/* frost-protection setpoint follows what is actually growing: none for an empty house,
-   just above freezing for hardy greens, 5 °C for tender crops and seedlings */
+/* frost-protection setpoint follows what is actually growing: none for an empty house, otherwise
+   the heater holds (setHeat + 1) 3 °C above the most tender bed crop's frost point, at most 5 °C;
+   nursery seedlings sit under a heated propagation cover and only ask for −8 °C */
 function heatSetpoint() {
   let req = -50;
   for (const p of plantsAll()) if (!p.dead) req = Math.max(req, p.spec.frost + 3);
@@ -1694,7 +1718,7 @@ function climateVisuals(rdt) {
    (plants integrate over the day; instantaneous heat and frost are handled separately as stress) */
 function tempFactor(sp, T) {
   const [tb, t1, t2, tm] = sp.temp;
-  if (T <= tb || T >= tm) return 0;
+  if (T <= tb || (T >= tm && sp.kind !== 'dig' && sp.kind !== 'pull')) return 0;
   if (T < t1) return (T - tb) / (t1 - tb);
   if (T <= t2) return 1;
   if (sp.kind === 'dig' || sp.kind === 'pull') return T >= tm ? 0.7 : 1;   // heat doesn't halt maturing roots/pods; it costs yield instead
@@ -1746,7 +1770,7 @@ function buildWeatherFx() {
 function snowGroundGeo() {
   const L = ghBounds(), key = L.z0.toFixed(1) + ':' + L.z1.toFixed(1) + ':' + nGH();
   if (key === WFX.hole) return; WFX.hole = key;
-  const sh = new THREE.Shape(); sh.moveTo(-200, -200); sh.lineTo(260, -200); sh.lineTo(260, 200); sh.lineTo(-200, 200); sh.lineTo(-200, -200);
+  const sh = new THREE.Shape(); sh.moveTo(-1000, -1000); sh.lineTo(1000, -1000); sh.lineTo(1000, 1000); sh.lineTo(-1000, 1000); sh.lineTo(-1000, -1000);
   for (let k = 0; k < nGH(); k++) {   // no snow on the greenhouse floors
     const h = new THREE.Path(), x0 = houseX(k) - GH.HW - 0.02, x1 = houseX(k) + GH.HW + 0.02;
     h.moveTo(x0, -L.z0); h.lineTo(x0, -L.z1); h.lineTo(x1, -L.z1); h.lineTo(x1, -L.z0); h.lineTo(x0, -L.z0); sh.holes.push(h);
@@ -2165,8 +2189,9 @@ class Plant {
   die(cause) {
     if (this.seedPlant) { log('ai', `Seed plant ${this.id} lost to ${cause}`, true); seedLost(this); }
     this.dead = cause; this.vigor = 0.3; S.stats.killed = (S.stats.killed || 0) + 1; (S.stats.killedBy = S.stats.killedBy || {})[this.crop] = (S.stats.killedBy[this.crop] || 0) + 1;
-    for (const f of this.fruits) if (f.state === 'on') { FOOD.lose(this.crop, this.spec.fruitKg); f.state = 'lost'; if (f.mesh.parent) f.mesh.parent.remove(f.mesh); if (f.task) cancelTask(f.task, cause); }
+    for (const f of this.fruits) if (f.state === 'on') { if (f.r >= 0.8) FOOD.lose(this.crop, this.spec.fruitKg); f.state = 'lost'; if (f.mesh.parent) f.mesh.parent.remove(f.mesh); if (f.task) cancelTask(f.task, cause); }
     this.fruits = [];
+    if (this.task && this.task.type !== 'clear' && !(this.task.arm && this.task.arm.held)) cancelTask(this.task, cause);   // a frost-killed plant is cleared, not harvested; produce already in the gripper is kept
     log('ai', `${this.spec.label} ${this.id} killed by ${cause} (inside ${CLIMATE.Tin.toFixed(1)} °C) → clear & replant`, true);
     this.apply();
   }
@@ -2185,7 +2210,7 @@ class Plant {
   }
   addBig(formed, idx) {
     const mesh = new THREE.Mesh(PG.pumpkin, fruitMat(FRUIT_COLORS.pumpkin[0])); mesh.material.roughness = 0.6; mesh.castShadow = true;
-    const stem = cyl(0.06, 0.09, 0.3, MS({ color: 0x6a7a3a, roughness: 0.8 }), 6); stem.position.y = 0.8; mesh.add(stem);
+    const stem = new THREE.Mesh(PG.pumpStem || (PG.pumpStem = new THREE.CylinderGeometry(0.06, 0.09, 0.3, 6)), M.pumpStem || (M.pumpStem = MS({ color: 0x6a7a3a, roughness: 0.8 }))); stem.castShadow = stem.receiveShadow = true; stem.position.y = 0.8; mesh.add(stem);
     mesh.userData.plant = this;
     this.group.add(mesh);
     const f = { id: uid(), plant: this, mesh, formed, r: (this.age - formed) / this.spec.ripen, state: 'on', detected: false, task: null, conf: rand(0.92, 0.99), kind: 'pumpkin', big: true, stem, zOff: idx ? 0.55 : -0.45 };
@@ -2203,6 +2228,8 @@ class Plant {
 }
 function bigR(f) { return 0.05 + 0.1 * clamp(f.r / 0.8, 0, 1); }
 const FLOWER_COL = { tomato: 0xffd21a, pepper: 0xf6f3ea, pumpkin: 0xffc61a };
+const FRUIT_COL3 = Object.fromEntries(Object.entries(FRUIT_COLORS).map(([k, a]) => [k, a.map(c => new THREE.Color(c))]));   // built once; never mutate
+const ROT_COL = new THREE.Color(0x4a2a1a);
 function fruitVisual(f) {
   const r = f.r, gs = f.plant.group.scale, flower = r < 0.12;
   const geo = flower ? (f.big ? PG.pumpFlower : f.kind === 'tomato' ? PG.tomFlower : PG.pepFlower) : (f.big ? PG.pumpkin : f.kind === 'tomato' ? PG.truss : PG.bell);
@@ -2217,10 +2244,11 @@ function fruitVisual(f) {
     f.mesh.scale.set(k / gs.x, k / gs.y, k / gs.z);
   }
   if (flower) { f.mesh.material.color.setHex(FLOWER_COL[f.kind]); return; }
-  const [g, o, red] = FRUIT_COLORS[f.kind].map(c => new THREE.Color(c));
-  const k = clamp(r, 0, 1.6);
-  const c = k < 0.55 ? g : (k < 0.8 ? g.clone().lerp(o, (k - 0.55) / 0.25) : (k <= 1 ? o.clone().lerp(red, (k - 0.8) / 0.2) : red.clone().lerp(new THREE.Color(0x4a2a1a), (k - 1) / 0.6)));
-  f.mesh.material.color.copy(c);
+  const [g, o, red] = FRUIT_COL3[f.kind], k = clamp(r, 0, 1.6), c = f.mesh.material.color;
+  if (k < 0.55) c.copy(g);
+  else if (k < 0.8) c.copy(g).lerp(o, (k - 0.55) / 0.25);
+  else if (k <= 1) c.copy(o).lerp(red, (k - 0.8) / 0.2);
+  else c.copy(red).lerp(ROT_COL, (k - 1) / 0.6);
 }
 function dropFruit(f) {   // over-ripe fruit falls & is lost
   f.state = 'lost'; if (f.slot) f.slot.used = false;
@@ -2414,6 +2442,7 @@ class Bug {
     this.alive = false; this.plant.bugs = Math.max(0, this.plant.bugs - 1);
     if (zapped && !S.macro) FX.burst(this.pos, 18, 0xffa040, 0.6, 0.35);
     if (this.mesh.parent) this.mesh.parent.remove(this.mesh);
+    disposeTree(this.mesh);
     G.bugs = G.bugs.filter(b => b !== this);
     if (this.task && this.task.state !== 'done') cancelTask(this.task, zapped ? 'target neutralised' : 'target left');
   }
@@ -2662,10 +2691,9 @@ function paperPlan(bays, days = 730, beds = houseBeds(bays), rot = ROT_ORDER[DES
       const ol = outlookDOY(cur.crop, doy), S_ = cur.spots;
       let done = false;
       switch (sp.kind) {
-        case 'head': if (cur.age >= sp.mature) { put(d, cur.crop, S_ * sp.headKg * PLAN_HV); done = true; } break;
-        case 'dig': case 'pull': {
+        case 'head': case 'dig': case 'pull': {
           const early = cur.age >= 0.6 * sp.mature && ol < 0.15;
-          if (cur.age >= sp.mature || early) { put(d, cur.crop, S_ * sp.plantKg * (sp.perSpot || 1) * cur.ymul * Math.pow(Math.min(1, cur.age / sp.mature), 2) * PLAN_HV); done = true; }
+          if (cur.age >= sp.mature || early) { put(d, cur.crop, S_ * (sp.kind === 'head' ? sp.headKg : sp.plantKg * (sp.perSpot || 1)) * cur.ymul * Math.pow(Math.min(1, cur.age / sp.mature), 2) * PLAN_HV); done = true; }
           else if (cur.age > 5 && cur.age < 0.6 * sp.mature && ol < 0.1) done = true;
           break;
         }
@@ -2759,7 +2787,7 @@ function planActual() {
 function foodSizing() {
   const all = SYS.days; if (all.length < 30) return null;
   const T = dietTargets(), growBays = FARM.bays * FARM.houses;
-  const perHouse = r => { const n = r.n || FARM.houses; const o = {}; for (const [c, kg] of Object.entries(r.hk)) o[c] = kg / n; return o; };
+  const perHouse = r => { const n = (r.n || FARM.houses) * (r.b || FARM.bays) / FARM.bays, sv = !r.on || r.on.seeds !== false; const o = {}; for (const [c, kg] of Object.entries(r.hk)) o[c] = kg / n * (sv ? 1 - seedKeepFrac(c) : 1); return o; };   // house 1's harvest, scaled to the bays now built, net of seed held back (as in the plan) on days seed saving was on
   const a = animalNow();
   if (all.length >= 730) {
     const D = all.slice(-365), series = D.map(perHouse);
@@ -2777,7 +2805,7 @@ function foodSizing() {
 }
 
 const _fsC = { n: -1, v: null };
-function foodSizingCached() { if (_fsC.n !== SYS.days.length) { _fsC.v = foodSizing(); _fsC.n = SYS.days.length; } return _fsC.v; }
+function foodSizingCached() { if (_fsC.n !== SYS.nDays) { _fsC.v = foodSizing(); _fsC.n = SYS.nDays; } return _fsC.v; }
 /* End of year 1: the owner compares the year's harvest with the plan. If the farm turned out short,
    more identical houses are put up; they reach full production over about four months, and the
    store carries the person through until then. */
@@ -2900,7 +2928,7 @@ function nurseryUpdate(dt) {
 function sowCell(c) {
   recordSeed(c.crop, 1);
   const sp = CROPS[c.crop];
-  Object.assign(c, { state: 'sown', age: 0, sownT: S.t, germOK: Math.random() < sp.germRate, flagged: false });
+  Object.assign(c, { state: 'sown', age: 0, sownT: S.t, readyT: 0, germOK: Math.random() < sp.germRate, flagged: false });
   S.stats.sown = (S.stats.sown || 0) + 1; NURSERY.dirty = true;
 }
 function resetCell(c) {
@@ -2944,7 +2972,7 @@ function nurseryPlan() {
   CLIMATE.setHeat = heatSetpoint();
   rotationPlan();
   const N = NURSERY, now = S.t;
-  for (const c of N.cells) if (c.forSpot && (!G.beds.includes(c.forSpot.bed) || c.forSpot.bed.crop !== c.crop || c.forSpot.cell !== c)) { if (c.forSpot.cell === c) c.forSpot.cell = null; c.forSpot = null; }
+  for (const c of N.cells) if (c.forSpot && (c.forSpot.bed.module.removing || !G.beds.includes(c.forSpot.bed) || c.forSpot.bed.crop !== c.crop || c.forSpot.cell !== c)) { if (c.forSpot.cell === c) c.forSpot.cell = null; c.forSpot = null; }
   let full = 0;
   for (const bed of G.beds) {
     if (!bed.module.ready()) continue;
@@ -2981,7 +3009,7 @@ const ROT_ORDER = { staple: ['bean', 'potato', 'kale', 'lettuce'], mixed: ['lett
 const inRotation = bed => bed.home && bed.crop !== bed.home;
 const bedIdle = bed => bed.spots.every(s => !s.plant && !s.task && !s.cell);
 function rotDuration(sp) {   // shortest useful stay, calendar days at a typical 80 % growth rate: a leaf crop
-  return (sp.kind === 'leaf' ? sp.first + sp.interval : sp.mature) / 0.8;   // needs two cuts, then it is pulled on time
+  return (sp.kind === 'leaf' ? sp.first + sp.interval : sp.mature) / 0.8 + (sp.succession ? (sp.n - 1) * sp.succession : 0);   // needs two cuts, then it is pulled on time; succession columns go in sp.succession days apart
 }
 const ROT_MIN_GAP = 35;   // days a bed must stand empty before a catch crop is worth putting in
 function relayBed(bed, crop) {
@@ -3293,7 +3321,7 @@ class Arm {
       }
       break;
     }
-    this.kin(dts);
+    this.kin(dt);
     if (this.laser.t > 0) this.laser.t -= dts;
     const busy = this.actions.length > 0 || this.coop;
     this.ledMat.emissive.setHex(S.lasersLocked && this.speedF < 1 ? 0xffb020 : (this.laser.t > 0 ? 0xff2020 : (busy ? 0x3dff6a : 0x3aa0ff)));
@@ -3313,6 +3341,7 @@ class Arm {
   }
   dropHeld() {
     const h = this.held; this.held = null; if (!h) return;
+    if (h.item && (h.item.dest === 'cooler' || h.item.dest === 'dryer' || h.item.dest === 'compost')) FOOD.add(h.item);   // already counted as harvested/cleared: book it (store, seed tray or compost)
     scene.attach(h.mesh);
     tweenTo(h.mesh, V3(h.mesh.position.x, GH.BED_TOP + 0.03, h.mesh.position.z), 0.5, () => h.mesh.parent && h.mesh.parent.remove(h.mesh));
   }
@@ -3532,6 +3561,7 @@ function finishTask(t, result) {
 function cancelTask(t, reason) {
   if (!t || t.state === 'done' || t.state === 'cancelled') return;
   const arm = t.arm && t.arm.task === t ? t.arm : null;
+  if (arm && t.onAbort) t.onAbort();
   finishTask(t, 'cancelled'); t.reason = reason;
   if (arm) arm.abort('cancel');
 }
@@ -3586,7 +3616,7 @@ function takeLeaf(p) {
 }
 function clearPlant(p) {
   seedLost(p);
-  for (const f of p.fruits) { if (f.task) cancelTask(f.task, 'crop cleared'); if (f.state === 'on' && f.r >= 0.8) FOOD.lose(p.crop, p.spec.fruitKg); }
+  for (const f of p.fruits) { if (G.coop && f.task && G.coop.task === f.task) endCoop(false); else if (f.task) cancelTask(f.task, 'crop cleared'); if (f.state === 'on' && f.r >= 0.8) FOOD.lose(p.crop, p.spec.fruitKg); }
   freeSpot(p);
   return { crop: p.crop, kg: RESIDUE[p.crop] * (p.spec.perSpot || 1), mesh: p.group, dest: 'compost', label: 'spent ' + p.spec.label.toLowerCase(), shrink: 0.3 };
 }
@@ -3707,7 +3737,7 @@ function maintainTasks() {
       if ((t.type === 'seed_collect' || t.type === 'pollinate') && t.state === 'pending' && (t.target.spot.plant !== t.target || !t.target.seedPlant)) { cancelTask(t, 'gone'); continue; }
       if (t.type === 'plant' && t.target.plant) { cancelTask(t, 'occupied'); continue; }
       if (t.type === 'transplant' && (t.spot.plant || (t.target.state !== 'ready' && t.target.state !== 'carried'))) { cancelTask(t, 'not ready'); continue; }
-      if (t.type === 'cull' && t.target.state === 'empty') { cancelTask(t, 'gone'); continue; }
+      if (t.type === 'cull' && (t.target.state === 'empty' || t.target.forSpot)) { cancelTask(t, t.target.forSpot ? 'needed for a bed' : 'gone'); continue; }
       if (t.type === 'water' && t.state === 'pending' && t.target.moisture > 0.6) { cancelTask(t, 'wet'); continue; }
       t.p = taskPos(t);
       if (t.type === 'water') t.urgent = t.target.moisture < 0.22 ? 32 : 0;
@@ -3726,13 +3756,13 @@ function execNow(t) {
   switch (t.type) {
     case 'zap_bug': finishTask(t, 'done'); S.stats.bugs++; S.stats.laserShots++; g.kill(true); return;
     case 'zap_weed': finishTask(t, 'done'); S.stats.weedsLaser++; S.stats.laserShots++; g.destroy(); return;
-    case 'pull_weed': finishTask(t, 'done'); S.stats.weedsPulled++; g.destroy(); FOOD.compost(0.1 * FARM.n, 'weeds'); return;
+    case 'pull_weed': finishTask(t, 'done'); S.stats.weedsPulled++; g.destroy(); FOOD.compost(0.05 * FARM.n, 'weeds'); return;
     case 'verify': finishTask(t, 'done'); S.stats.falsePos++; return;
     case 'water': finishTask(t, 'done'); waterBed(g); return;
     case 'plant': finishTask(t, 'done'); if (!g.plant) { new Plant(g, g.bed.crop, 0); S.stats.planted++; recordSeed(g.bed.crop, SEEDS_PER_SPOT[g.bed.crop] || 1); } return;
     case 'sow': finishTask(t, 'done'); sowCell(g); return;
     case 'transplant': { const s = t.spot; finishTask(t, 'done'); if (g.state === 'ready' && !s.plant) doTransplant(g, s); return; }
-    case 'cull': finishTask(t, 'done'); FOOD.compost(0.02 * FARM.n, 'culls'); S.stats.culled = (S.stats.culled || 0) + 1; resetCell(g); return;
+    case 'cull': if (g.forSpot) { cancelTask(t, 'needed for a bed'); return; } finishTask(t, 'done'); FOOD.compost(0.02 * FARM.n, 'culls'); S.stats.culled = (S.stats.culled || 0) + 1; resetCell(g); return;
     case 'harvest_fruit': if (g.state !== 'on') { cancelTask(t, 'gone'); return; } it = takeFruit(g); break;
     case 'harvest_whole': if (g.spot.plant !== g) { cancelTask(t, 'gone'); return; } it = takeWhole(g); break;
     case 'harvest_leaf': if (g.spot.plant !== g) { cancelTask(t, 'gone'); return; } it = takeLeaf(g); break;
@@ -3762,6 +3792,22 @@ function timeLapseExecute(maxAge) {
     if (f.state === 'on') { const it = takeBig(f); if (it.mesh.parent) it.mesh.parent.remove(it.mesh); FOOD.add(it); S.stats.coop++; }
     endCoop(true);
   }
+}
+/* 'Simulate 1 year' and fastForward step only the calendar: settle what the arms have in hand first, or it stays frozen for the whole run */
+function settleRobots() {
+  if (S.mode !== 'running') return;
+  for (const a of G.arms) {
+    if (a.held) { const it = a.held.item, m = a.held.mesh; a.held = null; if (m.parent) m.parent.remove(m); if (it.kg > 0) { FOOD.add(it); if (a.task) finishTask(a.task, 'done'); } }   // picked already: only the stow was left
+    if (a.tool && a.tool.carried.length) { a.tool.carried.forEach(it => { if (it.mesh && it.mesh.parent) it.mesh.parent.remove(it.mesh); FOOD.add(it); }); a.tool.carried = []; }
+    if (a.task || a.coop || a.actions.length) a.abort('fail', 'time-lapse');   // active task → pending, then timeLapseExecute runs it
+  }
+  const C = G.coop; if (!C) return;
+  const f = C.task.target, it = C.item || (f.state === 'on' ? takeBig(f) : null);
+  if (!it) { endCoop(false); return; }
+  if (C.phase !== 'retreat') { FOOD.add(it); S.stats.coop++; }   // retreat: already in the store
+  if (f.mesh.parent) f.mesh.parent.remove(f.mesh);
+  G.hatches.coolerBig.target = 0;
+  endCoop(true);
 }
 
 /* ---------------- scheduling ---------------- */
@@ -3845,6 +3891,7 @@ function stow(a) {
 }
 const HATCH_FOR = { cooler: 'cooler', dryer: 'dryer', compost: 'compost' };
 const PACK_COL = { lettuce: 0x8fd16a, kale: 0x4f8a64, basil: 0x6ccb52, tomato: 0xe0482e, pepper: 0xd8322a, potato: 0xc8a46a, sweetpotato: 0xd9783a, bean: 0xb98a5a, pumpkin: 0xe98a2a, egg: 0xe9dcb4, fish: 0x8fb1c9, hen: 0xd8a26f };
+const PACK_GEO = new THREE.BoxGeometry(0.16, 0.1, 0.12), PACK_MAT = {};   // one bag shape, one material per crop
 function dumpCarried(a, h, dest) {
   const tool = a.tool; if (!tool) return;
   const items = tool.carried.filter(c => !dest || c.dest === dest);
@@ -4006,7 +4053,7 @@ function taskActions(a, t) {
       Act.guard(() => !g.plant),
       Act.move(V3(g.x, GH.BED_TOP - 0.035, g.z), downAt(g), { speed: 0.3 }),
       Act.wait(0.2),
-      Act.call(() => { if (!g.plant) { new Plant(g, g.bed.crop, 0); S.stats.planted++; recordSeed(g.bed.crop, SEEDS_PER_SPOT[g.bed.crop] || 1); } FX.burst(V3(g.x, GH.BED_TOP + 0.01, g.z), 8, 0x5a3e28, 0.25, 0.3); }),
+      Act.call(() => { finishTask(t, 'done'); if (!g.plant) { new Plant(g, g.bed.crop, 0); S.stats.planted++; recordSeed(g.bed.crop, SEEDS_PER_SPOT[g.bed.crop] || 1); } FX.burst(V3(g.x, GH.BED_TOP + 0.01, g.z), 8, 0x5a3e28, 0.25, 0.3); }),
       Act.move(V3(g.x, GH.BED_TOP + 0.3, g.z), downAt(g), { speed: 0.35 }),
       done,
     ];
@@ -4044,7 +4091,8 @@ function taskActions(a, t) {
         Act.status(`Cull: ${label}`, 'clear'),
         ...travelTo(at(0.2), DOWN, { speed: 0.6 }),
         Act.move(at(0.012), DOWN, { speed: 0.25 }),
-        Act.call(x => { const m = seedlingMesh(g); resetCell(g); S.stats.culled = (S.stats.culled || 0) + 1; grip(x, { mesh: m, crop: 'seedling', kg: 0.02, dest: 'compost', label: 'spare seedling' }); }),
+        Act.guard(() => !g.forSpot),
+        Act.call(x => { finishTask(t, 'done'); const m = seedlingMesh(g); resetCell(g); S.stats.culled = (S.stats.culled || 0) + 1; grip(x, { mesh: m, crop: 'seedling', kg: 0.02, dest: 'compost', label: 'spare seedling' }); }),
         Act.move(at(0.3), DOWN, { speed: 0.35 }),
         Act.call(x => stow(x)),
         done,
@@ -4087,7 +4135,7 @@ function taskActions(a, t) {
         ...travelTo(h.pos.clone().add(V3(0, 0.32, 0)), DOWN, { speed: 0.6 }),
         Act.call(() => { h.target = 1; }), Act.wait(0.3),
         Act.move(h.pos.clone().add(V3(0, 0.12, 0)), DOWN, { speed: 0.3 }),
-        Act.call(x => { const m = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.1, 0.12), MS({ color: PACK_COL[g.crop] || 0x9a7a4a, roughness: 0.8 })); m.position.copy(h.pos); scene.add(m); grip(x, { mesh: m, crop: g.crop, kg: 0, dest: 'sale', label: 'bag' }); }),
+        Act.call(x => { const m = new THREE.Mesh(PACK_GEO, PACK_MAT[g.crop] || (PACK_MAT[g.crop] = MS({ color: PACK_COL[g.crop] || 0x9a7a4a, roughness: 0.8 }))); m.position.copy(h.pos); scene.add(m); grip(x, { mesh: m, crop: g.crop, kg: 0, dest: 'sale', label: 'bag' }); }),
         Act.move(h.pos.clone().add(V3(0, 0.42, 0)), DOWN, { speed: 0.4 }), Act.call(() => { h.target = 0; }),
         ...travelTo(drop(0.35), DOWN, { speed: 0.6 }),
         Act.move(drop(0.12), DOWN, { speed: 0.3 }),
@@ -4105,7 +4153,7 @@ function joinCoop(arm) {
   const acts = [];
   if (arm.tool && arm.tool.carried.length) acts.push(...depositActions(arm));
   if (!arm.tool || arm.tool.type !== 'cradle') acts.push(...toolChange(arm, 'cradle'));
-  acts.push(Act.status('Co-op: standing by', 'coop'), Act.call(a => { a.coopReady = true; }));
+  acts.push(Act.status('Co-op: standing by', 'coop'), Act.call(a => { if (a.coop) a.coopReady = true; }));
   arm.actions = acts;
   log('arm', `${arm.name}: joining co-op lift`);
 }
@@ -4117,7 +4165,7 @@ function coopUpdate(dt) {
   const side = [[A, -1], [B, 1]];
   if (C.phase === 'recruit') {
     if (f.state !== 'on') { endCoop(false); return; }
-    if (!(A.coopReady && B.coopReady)) return;
+    if (!(A.coop && B.coop && A.coopReady && B.coopReady)) return;
     C.active = true; C.P = fruitWorld(f); C.R = bigR(f);
     C.task.arm = A;
     const P = C.P, R = C.R;
@@ -4167,7 +4215,7 @@ function coopUpdate(dt) {
   if (C.phase === 'release' && idle()) {
     const m = f.mesh, h = G.hatches.coolerBig;
     tweenTo(m, m.position.clone().add(V3(0, -0.9, 0)), 0.45, () => { m.parent && m.parent.remove(m); h.target = 0; });
-    FOOD.add(C.item); S.stats.coop++;
+    FOOD.add(C.item); C.stored = true; S.stats.coop++;
     log('store', `Co-op: pumpkin (${C.item.kg.toFixed(1)} kg) lowered into squash store`, true);
     for (const [arm, s] of side) arm.actions = [Act.move(V3(h.pos.x + 0.6, 2.25, h.pos.z + s * 1.0), DOWN, { speed: 0.45, soft: true, tol: 0.08 })];
     C.phase = 'retreat'; return;
@@ -4176,6 +4224,10 @@ function coopUpdate(dt) {
 }
 function endCoop(ok) {
   const C = G.coop; if (!C) return;
+  if (!ok && C.item) {   // cut short after the stem cut: the weighed pumpkin still goes to the store, and the hatch closes
+    if (!C.stored) { const m = C.task.target.mesh; if (m.parent) m.parent.remove(m); FOOD.add(C.item); C.stored = true; }
+    G.hatches.coolerBig.target = 0;
+  }
   finishTask(C.task, ok ? 'done' : 'cancelled');
   for (const a of G.arms) { a.coop = false; a.coopReady = false; a.status = 'Idle'; }
   G.coop = null;
@@ -4218,7 +4270,7 @@ const kgStr = v => v >= 100 ? v.toFixed(0) : v >= 10 ? v.toFixed(1) : v.toFixed(
 const FOOD = {
   profile: 'man',
   lots: [], drying: [], dryCapKg: 15, coolCapKg: 600,
-  hist: [], harvestLog: [], today: {},
+  hist: [], harvestLog: [], today: {}, sumN: new Float64Array(NK.length), nDays: 0,
   harvest: {}, eaten: {}, dried: {}, shared: {}, sold: {}, spoiled: {}, lost: {}, toHens: {}, animal: {}, aToday: {}, compostKg: 0, ext: { oilKg: 0, stapleKg: 0, stapleKcal: 0, suppDays: 0, b12Days: 0, dDays: 0, minDays: 0 },
   mealKey: null, startT: 0,
   recordHarvest(crop, kg) {
@@ -4237,7 +4289,7 @@ const FOOD = {
     if (!it || it.dest === 'compost') { this.compost((it ? (it.kg || 0.05) : 0.05) * FARM.n, it && it.crop === 'weed' ? 'weeds' : it && it.crop === 'seedling' ? 'culls' : 'residue', null, it && it.crop); return; }
     if (it.seed) {   // seed stalks and seed fruit go to the seed tray
       seedIn(it.crop, it.seed, it.label);
-      if (it.dest === 'dryer' && SEED_SAVE[it.crop] && SEED_SAVE[it.crop].how === 'fruit') {
+      if (SEED_SAVE[it.crop] && SEED_SAVE[it.crop].how === 'fruit') {
         if (SEED_SAVE[it.crop].eat) it = Object.assign({}, it, { seed: 0 });   // the pumpkin is eaten
         else { this.compost(it.kg * FARM.n, 'seed pulp', cropNPK(it.crop), it.crop); return; }
       } else return;
@@ -4315,9 +4367,9 @@ const FOOD = {
     ext[iB12] += b12; ext[iD] += vd;
     const stapleG = Math.max(Math.max(0, T0[0] - intake[0] - ext[0]) / (STAPLE_N100[0] / 100), Math.max(0, T0[1] - intake[1]) / (STAPLE_N100[1] / 100));   // energy or protein, whichever is short
     for (let i = 0; i < STAPLE_N100.length; i++) ext[i] += STAPLE_N100[i] * stapleG / 100;
-    // any vitamin or mineral still short after that (calcium and zinc on a mostly-plant diet) comes from a tablet
+    // calcium and zinc still short after that (common on a mostly-plant diet) come from a calcium + zinc tablet; other shortfalls stay visible
     let minerals = false;
-    for (let i = 5; i < NK.length; i++) { const gap = T0[i] - intake[i] - ext[i]; if (gap > 0.005 * T0[i] && i !== iB12 && i !== iD) { ext[i] += gap; minerals = true; } }
+    for (const i of [NK.indexOf('ca'), NK.indexOf('zn')]) { const gap = T0[i] - intake[i] - ext[i]; if (gap > 0.005 * T0[i]) { ext[i] += gap; minerals = true; } }
     this.ext.oilKg += oilG / 1000; this.ext.stapleKg += stapleG / 1000; this.ext.stapleKcal += stapleG * STAPLE_N100[0] / 100; this.ext.suppDays++;
     if (b12 > 0.05) this.ext.b12Days++; if (vd > 0.3) this.ext.dDays++; if (minerals) this.ext.minDays++;
     this.todayExt = { oilG, stapleG, ext, minerals, aIn };
@@ -4360,6 +4412,7 @@ const FOOD = {
     saleDaily();
     this.hist.push({ day: dayNum(), n: intake, plate, ext, oilG, stapleG, aIn });
     if (this.hist.length > 400) this.hist.shift();
+    for (let i = 0; i < NK.length; i++) this.sumN[i] += intake[i]; this.nDays++;   // whole-run totals; hist keeps only the last 400 days
     // daily summary for the log
     const T = dietTargets(), hk = sumKg(this.today);
     const top = Object.entries(this.today).sort((a, b) => b[1] - a[1]).slice(0, 4).map(([c, k]) => `${CROPS[c].label.toLowerCase()} ${kgStr(k)}`).join(' · ');
@@ -4470,7 +4523,7 @@ function setSwitch(k, v) {
   if (k === 'hens') note = v ? hensStart() : hensStop();
   log('sys', `${sw.label} switched ${v ? 'ON' : 'OFF'}${note ? ' · ' + note : ''}`, true);
   _fsC.n = -1;
-  if (typeof REPORT !== 'undefined') { REPORT.cache.foodN = -1; if (REPORT.open) reportRefresh(true); }
+  if (typeof REPORT !== 'undefined') { REPORT.cache.foodN = -1; REPORT.cache.bigKey = null; if (REPORT.open) reportRefresh(true); }
   if (typeof UI !== 'undefined' && UI.syncSwitches) UI.syncSwitches();
 }
 const swLabel = k => (SWITCHES.find(s => s.k === k) || { label: k }).label;
@@ -4524,7 +4577,7 @@ const fishBiomass = () => FISH.cohorts.reduce((s, c) => s + c.n * c.w, 0) / 1000
 function fishStart() { FISH.nextStock = S.t; return FISH.Tw < 20 ? 'heating the pool, then fingerlings go in; first fish in about six months' : 'fingerlings go in today; first fish ready in about six months'; }
 function fishStop() {
   let kg = 0; for (const c of FISH.cohorts) kg += c.n * c.w / 1000;
-  FISH.sharedKg += kg; FISH.cohorts = [];
+  FISH.harvestKg += kg; FISH.sharedKg += kg; FOOD.shared.fish = (FOOD.shared.fish || 0) + kg; FISH.cohorts = [];
   return kg > 0.5 ? `${kgStr(kg)} kg of fish harvested and shared, pool heater and pumps off` : 'pool heater and pumps off';
 }
 function fishStep(dt) {
@@ -4626,7 +4679,7 @@ function hensStep(dt) {
   const mN = Math.max(0, want * 0.0256 - eggKg * 0.019) * 0.65, mP = Math.max(0, want * 0.0055 - eggKg * 0.0021), mK = Math.max(0, want * 0.006 - eggKg * 0.0014);
   H.manureKg += mk; compostIn('chicken manure', mk, [mN / mk, mP / mk, mK / mk]);
   // background losses (predators, illness): ~4 % a year
-  if (Math.random() < 0.04 / 365 * n * dd) { H.birds.splice(Math.floor(Math.random() * n), 1); H.died++; log('sys', 'A hen died · she will be replaced at the next flock change'); }
+  if (Math.random() < 0.04 / 365 * n * dd) { H.birds.splice(Math.floor(Math.random() * n), 1); H.died++; log('sys', 'A hen died · a new pullet will replace her'); }
 }
 function hensDaily() {
   const H = HENS; if (!isOn('hens')) return;
@@ -4996,7 +5049,7 @@ function sellFood(crop, kg, form = 'fresh', why = 'surplus') {
   if (!(kg > 0)) return;
   sbAdd(SALE.why, why + ':' + crop, kg);
   if (!isOn('sell')) { FOOD.shared[crop] = (FOOD.shared[crop] || 0) + kg; return; }
-  const v = kg * (SALE_PRICE[crop] || 2) * (form === 'dried' ? 0.8 : 1);
+  const v = kg * (SALE_PRICE[crop] || 2) * (form === 'dried' && (FS(crop).dry || 1) < 1 ? 0.8 : 1);
   sbAdd(SALE.kg, crop, kg); sbAdd(SALE.today, crop, kg); sbAdd(FOOD.sold, crop, kg);
   SALE.rev += v; SALE.pack += kg * PACK_COST; SALE.todayKg += kg; SALE.todayRev += v; SALE.h.kg += kg; SALE.h.rev += v;
 }
@@ -5039,10 +5092,10 @@ function saleDaily() {
     let E = F.lots.filter(l => STAPLES.includes(l.crop)).reduce((s, l) => s + kc(l), 0), guard = 0;
     while (E > cap && guard++ < 40) {
       const by = {}; for (const l of F.lots) if (STAPLES.includes(l.crop) && l.ready <= now) by[l.crop] = (by[l.crop] || 0) + kc(l);
-      const beanDays = (by.bean || 0) / Math.max(1, eatRate('bean') * 1000 * CROPS.bean.n100[0] / 100 * 10);
+      const beanDays = (by.bean || 0) / Math.max(1, eatRate('bean') * CROPS.bean.edible * 10 * CROPS.bean.n100[0]);
       const c = Object.entries(by).filter(([k]) => k !== 'bean' || beanDays > 365).sort((a, b) => b[1] - a[1])[0];
       if (!c) break;
-      const l = F.lots.filter(x => x.crop === c[0] && x.ready <= now).sort((a, b) => a.t - b.t)[0]; if (!l) break;
+      const l = F.lots.filter(x => x.crop === c[0] && x.ready <= now && x.kg > 1e-6).sort((a, b) => a.t - b.t)[0]; if (!l) break;
       const per = kc(l) / l.kg, x = Math.min(l.kg, (E - cap) / per + 0.01);
       l.kg -= x; E -= x * per; sellFood(l.crop, x, l.form, 'reserve');
     }
@@ -5077,12 +5130,13 @@ function saleDaily() {
 /* pack jobs are arm tasks at the crate by the cold store, alternating sides */
 let packSide = 0;
 function createPackJob(kg, desc, crop) {
-  const m = G.modules.find(x => x.kind === 'core'); if (!m || !m.ready()) { SALE.week.crates++; return; }
+  SALE.week.crates++;   // counted in the week its kg is sold in (the pickup-day part-crate is packed after the pickup is logged)
+  const m = G.modules.find(x => x.kind === 'core'); if (!m || !m.ready()) return;
   const side = packSide++ % 2, z = side ? m.z1 - 0.27 : m.z0 + 0.27;
-  const job = { id: uid(), kind: 'pack', kg, desc, crop, side, pos: V3(-2.35, 0.62, z), task: null };
+  const job = { id: uid(), kind: 'pack', kg, desc, crop, side, wk: SALE.nextPickup, pos: V3(-2.35, 0.62, z), task: null };
   createTask('pack', job);
 }
-function packDone(job) { SALE.crates[job.side]++; SALE.week.crates++; }
+function packDone(job) { if (job.wk === SALE.nextPickup) SALE.crates[job.side]++; }   // a crate whose pickup has already gone is not stacked
 
 /* ---------- visuals: crates at the pack station, a feed tub by the compost bins, the larvae bin ---------- */
 const LPV = { built: false, crates: [[], []], cropCol: { lettuce: 0x8fd16a, kale: 0x4f8a64, basil: 0x6ccb52, tomato: 0xe0482e, pepper: 0xd8322a, potato: 0xc8a46a, sweetpotato: 0xd9783a, bean: 0xb98a5a, pumpkin: 0xe98a2a, egg: 0xe9dcb4, fish: 0x8fb1c9, hen: 0xd8a26f } };
@@ -5127,7 +5181,7 @@ function loopVisuals() {
   for (const s of LPV.crates) for (const c of s) c.userData.top.material.color.setHex(col);
   const on = isOn('waste');
   for (const t of LPV.tubs) { t.visible = vis && on; const k = clamp(WASTE.buf.green / 3, 0.05, 1); t.userData.fill.position.y = 0.06 + 0.32 * k; }
-  LPV.bin.visible = on; LPV.bin.userData.fill.position.y = 0.06 + 0.4 * clamp(WASTE.bin / BSF.binMax, 0, 1);
+  LPV.bin.visible = on && S.mode !== 'packed'; LPV.bin.userData.fill.position.y = 0.06 + 0.4 * clamp(WASTE.bin / BSF.binMax, 0, 1);
 }
 const LOOP_SRC = [
   ['Seed saving timing: lettuce bolts ~2 weeks after heading, seed ripe 12–24 days later; basil flowers 30–45 days after planting; kale is biennial, flowers after overwintering (SARE)', 'https://projects.sare.org/media/pdf/T/i/m/Timing-of-Planting-and-Harvest-for-Annual-Seed-Crops-Factsheet.pdf'],
@@ -5278,7 +5332,7 @@ FX.update = function (rdt) {
   });
   FX.lineMesh.geometry.attributes.position.needsUpdate = true; FX.lineMesh.geometry.attributes.color.needsUpdate = true;
 };
-const MARK_COL = { laser: 0xff5a4f, weed: 0xffc145, pick: 0x7bd88f, water: 0x5ab8ff, plant: 0xc89a6a, coop: 0xc58bff, verify: 0xff9ad0, soil: 0xa0785a };
+const MARK_COL = { laser: 0xff5a4f, weed: 0xffc145, pick: 0x7bd88f, water: 0x5ab8ff, plant: 0xc89a6a, coop: 0xc58bff, verify: 0xff9ad0, soil: 0xa0785a, seed: 0xe9c23a, pack: 0x7fa6c4 };
 FX.updateMarkers = function () {
   let n = 0;
   const now = performance.now() * 0.001;
@@ -5388,7 +5442,7 @@ function finInvest(why) {
 /* called once a day after supper */
 function finDaily(plate) {
   if (!FIN.inv.length) finInvest('build');
-  else if (dayNum() % 7 === 0) { const x = finInvest('farm grown'); if (x > 0) log('sys', `Investment: ${money(x)} more for the added house`, true); }
+  else if (dayNum() % 7 === 0) { const x = finInvest('farm grown'); if (x > 0) log('sys', `Investment: ${money(x)} more for the added bays or houses`, true); }
   const cc = costCum(), bought = cc.reduce((s, v, i) => s + v - (FIN.last ? FIN.last[i] : 0), 0); FIN.last = cc;
   const sales = SALE.rev - FIN.lastSales, pack = SALE.pack - FIN.lastPack; FIN.lastSales = SALE.rev; FIN.lastPack = SALE.pack;
   let food = 0; for (const [c, g] of Object.entries(plate || {})) { const sp = FS(c); food += g / 1000 / (sp.edible || 1) * RETAIL(c); }
@@ -5404,9 +5458,9 @@ function finProjection() {
   if (FIN.yr) return FIN.yr;
   const D = FIN.days, n = D.length;
   if (n < 365) return (FIN.yr = { ready: false, days: n });
-  const a = D[n - 365], b = D[n - 1], net = (b.inn - a.inn) - (b.out - a.out), bal = b.bal;
+  const a = D[n - 365], b = D[n - 1], inn0 = a.inn - a.sales - a.food, out0 = a.out - a.cost, net = (b.inn - inn0) - (b.out - out0), bal = b.bal;
   const years = bal >= 0 ? 0 : net > 0 ? -bal / net : Infinity;
-  return (FIN.yr = { ready: true, net, inn: b.inn - a.inn, out: b.out - a.out, sales: D.slice(-365).reduce((s, d) => s + d.sales, 0), food: D.slice(-365).reduce((s, d) => s + d.food, 0), years, when: isFinite(years) ? S.t + years * 365 * S.DAY : null, bal });
+  return (FIN.yr = { ready: true, net, inn: b.inn - inn0, out: b.out - out0, sales: D.slice(-365).reduce((s, d) => s + d.sales, 0), food: D.slice(-365).reduce((s, d) => s + d.food, 0), years, when: isFinite(years) ? S.t + years * 365 * S.DAY : null, bal });
 }
 /* header readout */
 function finHeader() {
@@ -5496,18 +5550,18 @@ const SYS = {
   W: { ghRoof: 0, houseRoof: 0, irrigation: 0, pads: 0, nursery: 0, house: 0, greyUsed: 0, bought: 0, overflow: 0, animals: 0, notCaught: 0 },
   CP: { in: {}, kgIn: 0, nIn: [0, 0, 0], pile: [], finishedKg: 0, finished: [0, 0, 0], urine: [0, 0, 0], humanure: [0, 0, 0] },
   removed: [0, 0, 0], seeds: {}, seedCost: 0,
-  hours: [], hb: null, days: [], day: null, last: { water: 0, padL: 0 }, t0: 0,
+  hours: [], hb: null, days: [], nDays: 0, day: null, last: { water: 0, padL: 0 }, t0: 0,
 };
 const E_CATS = ['Greenhouse heat', 'Fans & pads', 'Nursery', 'Cold store', 'Dehydrator', 'Robot arms', 'AI & cameras', 'Water pumps', 'House heating/cooling', 'House hot water', 'House appliances', 'Fish pool', 'Chickens'];
 /* ---------- PV yield per kWp (AC) from the sun position, cloud, temperature and snow on the panels ---------- */
 const PV_TILT = () => Math.max(10, Math.abs(SITE.lat)) * DEG;
-function pvPerKWp(t, ghi, cloud, Tout, snowCm) {
+function pvPerKWp(t, ghi, cloud, Tout, snowCm, gSnow = CLIMATE.groundSnow) {
   const s = sunDir(V3(), t); if (s.y <= 0.01 || ghi <= 0) return 0;
   const b = PV_TILT(), face = LAT >= 0 ? 1 : -1;                // equator-facing
   const n = V3(0, Math.cos(b), face * Math.sin(b));
   const fb = clamp(0.85 * (1 - cloud), 0, 0.85), Gb = ghi * fb, Gd = ghi - Gb;
   const dni = Math.min(1000, Gb / Math.max(0.08, s.y));
-  const albedo = CLIMATE.groundSnow > 2 ? 0.6 : 0.2;
+  const albedo = gSnow > 2 ? 0.6 : 0.2;
   const poa = dni * Math.max(0, s.dot(n)) + Gd * (1 + Math.cos(b)) / 2 + ghi * albedo * (1 - Math.cos(b)) / 2;
   const Tc = Tout + poa / 800 * 25;                               // NOCT-style cell temperature
   const snow = snowCm > 0.5 ? clamp(1 - snowCm / 3, 0, 1) : 1;
@@ -5601,7 +5655,7 @@ function sysStep(dt) {
   for (const b of SYS.CP.pile) if (!b.done && t >= b.ready) { b.done = true; const fin = [b.n[0] * 0.7, b.n[1] * 0.95, b.n[2] * 0.9]; SYS.CP.finishedKg += b.kg * 0.4; for (let i = 0; i < 3; i++) SYS.CP.finished[i] += fin[i]; soilAdd('compost', fin); }
   if (SYS.CP.pile.length > 60) SYS.CP.pile = SYS.CP.pile.filter(b => !b.done || t - b.ready < 30 * S.DAY);
   // day accumulators
-  const D = SYS.day; D.wind += wind * hr; D.pv += pv * hr; D.load += load * hr; D.unmet += unmet; D.grid += grid; D.socMin = Math.min(D.socMin, SYS.soc); D.rainL += ghIn + hsIn; D.useL += draw + greyUse; D.heatTh += heatTh * hr;
+  const D = SYS.day; D.wind += wind * hr; D.pv += pv * hr; D.load += load * hr; D.unmet += unmet; D.grid += grid; D.socMin = Math.min(D.socMin, SYS.soc); D.rainL += ghIn + hsIn; D.useL += draw + greyUse; D.greyL += greyUse; D.heatTh += heatTh * hr;
   D.Tmin = Math.min(D.Tmin, C.Tin); D.Tmax = Math.max(D.Tmax, C.Tin); D.Tout += C.Tout * hr; D.hrs += hr;
   // hourly bucket: sizing record + component history
   const hk = Math.floor(t / 3600);
@@ -5613,7 +5667,7 @@ function sysStep(dt) {
   B.rain += ghIn + hsIn; B.use += draw + greyUse; B.bought += SYS.boughtStep; B.grey += greyUse; B.houseL += houseL; B.heatTh += heatTh * hr;
   B.precip += (C.precip || 0) * hr;
 }
-function newDay() { return { pv: 0, wind: 0, load: 0, unmet: 0, grid: 0, socMin: Infinity, rainL: 0, useL: 0, bought: 0, heatTh: 0, Tmin: 99, Tmax: -99, Tout: 0, hrs: 0 }; }
+function newDay() { return { pv: 0, wind: 0, load: 0, unmet: 0, grid: 0, socMin: Infinity, rainL: 0, useL: 0, greyL: 0, bought: 0, heatTh: 0, Tmin: 99, Tmax: -99, Tout: 0, hrs: 0 }; }
 /* compost input: kg fresh with N-P-K content per kg; batches by fortnight */
 function compostIn(src, kg, npk, days = 120) {
   if (!(kg > 0)) return;
@@ -5643,11 +5697,11 @@ function sysDay(intake, today, X) {
   const cc = costCum(), prev = SYS.lastCost || cc.map(() => 0), buy = cc.map((v, i) => v - prev[i]); SYS.lastCost = cc;
   const aIn = X && X.aIn ? X.aIn : null;
   SYS.days.push({ d: dayNum(), t: S.t, n: FARM.n, doy: Math.floor(doyAt()), kcalPct: intake[0] / T[0], protPct: intake[1] / T[1], kcal: intake[0], fat: intake[3], oilKcal: X ? X.oilG * 8.84 : 0, stapleKcal: X ? X.stapleG * 3.56 : 0, planPct: (intake[0] + (X ? X.oilG * 8.84 : 0)) / T[0], hk: Object.assign({}, today), storeKcal: kcal, storeDays: kcal / T[0], storeProt: prot,
-    pv: D.pv, wind: D.wind, load: D.load, unmet: D.unmet, soc: SYS.batKWh ? SYS.soc / SYS.batKWh : 0, socMin: SYS.batKWh && D.socMin < Infinity ? D.socMin / SYS.batKWh : 0, cistern: SYS.cistern, rainL: D.rainL, useL: D.useL, bought: D.bought,
+    pv: D.pv, wind: D.wind, load: D.load, unmet: D.unmet, soc: SYS.batKWh ? SYS.soc / SYS.batKWh : 0, socMin: SYS.batKWh && D.socMin < Infinity ? D.socMin / SYS.batKWh : 0, cistern: SYS.cistern, rainL: D.rainL, useL: D.useL, greyL: D.greyL, bought: D.bought,
     heatTh: D.heatTh, Tmin: D.Tmin, Tmax: D.Tmax, Tout: D.hrs ? D.Tout / D.hrs : 0, snow: CLIMATE.groundSnow, compost: SYS.CP.kgIn,
-    grid: D.grid, ak: Object.assign({}, FOOD.aToday), aKcal: aIn ? aIn[0] : 0, aProt: aIn ? aIn[1] : 0, aFat: aIn ? aIn[3] : 0, protBought: X ? X.stapleG * STAPLE_N100[1] / 100 : 0,
+    grid: D.grid, b: FARM.bays, ak: Object.assign({}, FOOD.aToday), aKcal: aIn ? aIn[0] : 0, aProt: aIn ? aIn[1] : 0, aFat: aIn ? aIn[3] : 0, protBought: X ? X.stapleG * STAPLE_N100[1] / 100 : 0,
     buy, sold: SALE.lastDay ? SALE.lastDay.kg : 0, soldRev: SALE.lastDay ? SALE.lastDay.rev : 0, fertKg: SOIL.dayBuy.slice(), soilN: SOIL.pool[0], fishN: fishCount(), hens: HENS.birds.length, on: Object.assign({}, ON) });
-  if (SYS.days.length > 1100) SYS.days.shift();
+  SYS.nDays++; if (SYS.days.length > 1100) SYS.days.shift();
   SYS.day = newDay();
   farmReview();
 }
@@ -5684,7 +5738,7 @@ function designSystem(apply = true, mods = 0, houses = 0) {
   const growK = Math.max(0.25, grow / 4);   // nursery, storage, robot loads relative to a 4-bay house
   const growBeds = grow * 3, bedArea = grow * BAY_BED_AREA;
   const NC = E_CATS.length, partsH = new Float32Array(8760 * NC), heatThH = new Float32Array(8760), fishQH = new Float32Array(8760), fishRaw = new Float32Array(8760), ToutH = new Float32Array(8760), tgtD = new Float32Array(365);
-  const sch = isOn('sched'), hp = DESIGN.heat === 'hp', fishOn = DESIGN.fish !== false;
+  const sch = isOn('sched'), hp = DESIGN.heat === 'hp', fishOn = isOn('fish');
   const hourly = new Float32Array(8760), ventH = new Float32Array(8760), pvH = new Float32Array(8760), cat = new Array(E_CATS.length).fill(0), useD = new Float32Array(365);
   const month = Array.from({ length: 12 }, () => ({ load: 0, pv1: 0, days: 0, rain: 0, use: 0 }));
   let heatPk = 0;
@@ -5718,15 +5772,15 @@ function designSystem(apply = true, mods = 0, houses = 0) {
       // fish pool held at its setpoint by a heat pump; chickens: light to a 15-hour day, heated waterer, fan
       let fishKw = 0, henKw = 0, aniL = 0;
       if (fishOn) { const loss = FISH.UA * (FISH.T_SET - Tout) + FISH.UAG * (FISH.T_SET - SITE.tMean) - ghi * 16.6 * 0.65 * 0.5; fishQH[d * 24 + hh] = Math.max(0, loss) / 1000; fishRaw[d * 24 + hh] = loss / 1000; fishKw = FISH.pumpsKw; aniL += FISH.A * 2.9 / 24; }
-      if (DESIGN.hens !== false) { const dl = daylightHours(doy), lh = Math.max(0, HENS.LIGHT_H - dl), rise = 12 - dl / 2; henKw = (hh + 0.5 >= rise - lh && hh + 0.5 < rise ? 0.012 : 0) + (Tout < 0 ? 0.08 : 0) + (Tout > 30 ? 0.04 : 0); aniL += HENS.N * 0.25 / 24; }
+      if (isOn('hens')) { const dl = daylightHours(doy), lh = Math.max(0, HENS.LIGHT_H - dl), rise = 12 - dl / 2; henKw = (hh + 0.5 >= rise - lh && hh + 0.5 < rise ? 0.012 : 0) + (Tout < 0 ? 0.08 : 0) + (Tout > 30 ? 0.04 : 0); aniL += HENS.N * 0.25 / 24; }
       const pump = (irrL + pad + houseL + aniL) * 0.0005;
       const parts = [heatE, vent, nurs, cold, dryer, robots, ai, pump, H.hvac, H.hw, H.appl, fishKw, henKw];
       const L = parts.reduce((a, b) => a + b, 0), i = d * 24 + hh;
       parts.forEach((v, k) => { cat[k] += v; partsH[i * NC + k] = v; });
       heatThH[i] = heatTh; ToutH[i] = Tout;
-      hourly[i] = L; ventH[i] = vent; pvH[i] = pvPerKWp(t, ghi, cbar, Tout, 0);
+      hourly[i] = L; ventH[i] = vent; pvH[i] = pvPerKWp(t, ghi, cbar, Tout, 0, 0);
       month[m].load += L; month[m].pv1 += pvH[i];
-      const u = Math.max(0, irrL - (DESIGN.recycle ? houseL * GREY_FRAC : 0)) + pad + houseL + aniL; month[m].use += u; useD[d] += u;
+      const u = Math.max(0, irrL - (isOn('recycle') ? houseL * GREY_FRAC : 0)) + pad + houseL + aniL; month[m].use += u; useD[d] += u;
     }
   }
   // second pass: heat-pump electricity for frost protection and the fish pool. As needed, hour by hour — or,
@@ -5801,7 +5855,8 @@ function designSystem(apply = true, mods = 0, houses = 0) {
   let nightSum = 0, nightN = 0, nightMax = 0, cur = 0;
   for (let i = 0; i < 8760; i++) { if (pvH[i] < 0.02) cur += hourly[i]; else if (cur > 0) { nightSum += cur; nightN++; cur = 0; } }
   cur = 0; hrs.forEach((x, k) => { if (pvH[k % 8760] < 0.02) cur += x[0]; else if (cur > 0) { nightMax = Math.max(nightMax, cur); cur = 0; } });   // coldest night in the synthetic years
-  MONTH_START.slice(0, 12).forEach((s, m) => { month[m].rain = SITE.mm[m] * (A * 0.9 + HOUSE.roofArea * 0.85); });
+  const catchM2 = isOn('rain') ? A * 0.9 + HOUSE.roofArea * 0.85 : 0;   // gutters switched off: nothing reaches the tank
+  MONTH_START.slice(0, 12).forEach((s, m) => { month[m].rain = SITE.mm[m] * catchM2; });
   let worst = 0, wm = 0;   // worst month (for the explanation)
   month.forEach((mo, m) => { const r = (mo.load / mo.days) / Math.max(0.05, mo.pv1 / mo.days); if (r > worst) { worst = r; wm = m; } });
   const autonomy = SITE.sun < 0.55 ? 3 : 2;
@@ -5811,14 +5866,16 @@ function designSystem(apply = true, mods = 0, houses = 0) {
   const batKWh = Math.max(5, Math.ceil(pick.bat));
   // cistern: daily water balance over 12 synthetic years of rain (same wet/dry statistics as the live weather)
   const supply = month.reduce((s, m) => s + m.rain, 0), demand = month.reduce((s, m) => s + m.use, 0);
-  const cw = cisternDesign(useD, A * 0.9 + HOUSE.roofArea * 0.85);
+  const cw = cisternDesign(useD, catchM2);
   const cisternL = cw.L, short = cw.boughtPerYr;
   const peakKw = hourly.reduce((m, v) => Math.max(m, v), 0);
   const res = { backupOpts, storeTried, storeCosts, nWind, windYr, windTry, totes, storeCap, nightAvg: nightN ? nightSum / nightN : 0, nightMax, partsH, hrs, alt, heatPkKw: heatPk, ms: performance.now() - tStart, A, nMods, cores, peakKw, autonomy, synth: sz, backup, hourly, pvH, cat, month, wm, worst, pvKWp, batKWh, cisternL, supply, demand, short, cw, useD, annualLoad: hourly.reduce((a, b) => a + b, 0), annualPV1: pvH.reduce((a, b) => a + b, 0) };
   if (apply) {
-    const fs = SYS.batKWh ? SYS.soc / SYS.batKWh : 0.6, fc = SYS.cisternL ? SYS.cistern / SYS.cisternL : 0.6;   // keep charge and water levels when re-sizing
+    // first sizing starts 60 % full; re-sizing keeps what is stored (a smaller tank spills the excess to overflow)
+    SYS.soc = SYS.batKWh ? Math.min(batKWh, SYS.soc) : batKWh * 0.6;
+    if (!SYS.cisternL) SYS.cistern = cisternL * 0.6; else if (SYS.cistern > cisternL) { SYS.W.overflow += SYS.cistern - cisternL; SYS.cistern = cisternL; }
     SYS.designed = res; SYS.pvKWp = pvKWp; SYS.batKWh = batKWh; SYS.cisternL = cisternL;
-    SYS.soc = batKWh * fs; SYS.cistern = cisternL * fc; SYS.nHaf = nHaf / cores; SYS.nWind = nWind;
+    SYS.nHaf = nHaf / cores; SYS.nWind = nWind;
     const hf = SYS.hs.cap ? SYS.hs.kwh / SYS.hs.cap : 0.5; SYS.hs.cap = storeCap; SYS.hs.kwh = storeCap * hf; SYS.hs.totes = totes;
     buildPowerAndWater();
   }
@@ -5843,7 +5900,7 @@ function synthPV(cbar) {
       const t = (doy - START_DOY - 7.5 / 24 + (hh + 0.5) / 24) * S.DAY, s = sunDir(V3(), t);
       const ghi = 1000 * Math.pow(Math.max(0, s.y), 1.15) * (1 - 0.72 * c);
       const Tout = Tm + normalDTR(doy) / 2 * (1 - 0.5 * c) * Math.cos(TAU * (hh + 0.5 - 15) / 24);
-      out[y * 8760 + d * 24 + hh] = pvPerKWp(t, ghi, c, Tout, snowPanels);
+      out[y * 8760 + d * 24 + hh] = pvPerKWp(t, ghi, c, Tout, snowPanels, snowPanels);
       wo[y * 8760 + d * 24 + hh] = windKW(Math.max(0.3, wd * (0.75 + 0.35 * Math.sin(TAU * (hh + 0.5 - 9) / 24))));
     }
   }
@@ -5911,15 +5968,14 @@ function simSizing(maxUnmet = 0.0, hours = SYS.hours, nW = SYS.nWind || 0) {
 function simCistern() {
   const D = SYS.days; if (D.length < 60) return null;
   const use = D.reduce((s, d) => s + d.useL, 0);
-  const bought = cap => { let st = cap * 0.6, b = 0; for (let k = 0; k < 2; k++) for (const d of D) { st = Math.min(cap, st + d.rainL); const u = d.useL; if (u > st) { if (k) b += u - st; st = 0; } else st -= u; } return b; };
+  const bought = cap => { let st = cap * 0.6, b = 0; for (let k = 0; k < 2; k++) for (const d of D) { st = Math.min(cap, st + d.rainL); const u = d.useL - (d.greyL || 0); if (u > st) { if (k) b += u - st; st = 0; } else st -= u; } return b; };
   const rows = TANK_SIZES.map(L => ({ L, b: bought(L) * 365 / D.length }));
   const best = tankPick(rows, PRICES.waterKgal), haul = tankPick(rows, PRICES.waterHaul);
   return { L: best.L, boughtPerYr: best.b, haul, rows, usePerYr: use * 365 / D.length, rainPerYr: D.reduce((s, d) => s + d.rainL, 0) * 365 / D.length, days: D.length };
 }
 function applySizing(o) {   // o: {kwp, bat} and/or {cisternL}
-  const fs = SYS.batKWh ? SYS.soc / SYS.batKWh : 0.6, fc = SYS.cisternL ? SYS.cistern / SYS.cisternL : 0.6;
-  if (o.kwp) { SYS.pvKWp = o.kwp; SYS.batKWh = o.bat; SYS.soc = o.bat * fs; }
-  if (o.cisternL) { SYS.cisternL = o.cisternL; SYS.cistern = o.cisternL * fc; }
+  if (o.kwp) { SYS.pvKWp = o.kwp; SYS.batKWh = o.bat; SYS.soc = Math.min(o.bat, SYS.soc); }   // re-sizing keeps what is stored
+  if (o.cisternL) { SYS.cisternL = o.cisternL; if (SYS.cistern > o.cisternL) { SYS.W.overflow += SYS.cistern - o.cisternL; SYS.cistern = o.cisternL; } }
   SYS.manual = true; buildPowerAndWater();
   log('ai', `Re-sized from the simulated record → PV ${SYS.pvKWp.toFixed(1)} kWp · battery ${Math.round(SYS.batKWh / 0.9)} kWh · cistern ${(SYS.cisternL / 1000).toFixed(1)} m³`, true);
 }
@@ -5935,7 +5991,7 @@ const turbinePos = k => V3(-27, 0, -30 + k * 11);
 function windVisuals(rdt) {
   const n = SYS.nWind || 0, key = n + '';
   if (key !== WTV.key) {
-    WTV.key = key; if (WTV.group) scene.remove(WTV.group);
+    WTV.key = key; if (WTV.group) { scene.remove(WTV.group); disposeTree(WTV.group); }
     const g = WTV.group = new THREE.Group(); scene.add(g); WTV.rotors = []; WTV.heads = [];
     const H = 18, bladeG = new THREE.BoxGeometry(0.16, 1.45, 0.035); bladeG.translate(0, 0.78, 0);
     const wireM = new THREE.LineBasicMaterial({ color: 0x9aa4a8, transparent: true, opacity: 0.55 });
@@ -5959,10 +6015,10 @@ function windVisuals(rdt) {
   WTV.group.visible = S.mode !== 'packed';
   const on = isOn('wind'), v = CLIMATE.wind * WIND.hub, spin = on && v > 2.5 ? Math.min(14, v * 1.1) : 0;
   for (const r of WTV.rotors) r.rotation.z += rdt * spin;
-  for (const h of WTV.heads) h.rotation.y = lerp(h.rotation.y, (CLIMATE.windDir || 0) + Math.PI, 1 - Math.exp(-rdt));
+  for (const h of WTV.heads) h.rotation.y = lerp(h.rotation.y, Math.PI / 2 - (CLIMATE.windDir || 0), 1 - Math.exp(-rdt));
 }
 function buildPowerAndWater() {
-  if (PWR.group) { scene.remove(PWR.group); PWR.group.traverse(o => { if (o.geometry && o.geometry !== GEO.box) o.geometry.dispose(); }); }
+  if (PWR.group) { scene.remove(PWR.group); disposeTree(PWR.group); }
   const g = PWR.group = new THREE.Group(); scene.add(g);
   const L = ghBounds(), b = PV_TILT(), face = LAT >= 0 ? 1 : -1;
   // PV array: 440 W modules (1.13 × 2.1 m) in portrait rows facing the equator, on the sunny side of the farm
@@ -6036,6 +6092,7 @@ function systemVisuals(rdt) {
   const nm = G.modules.filter(m => !m.removing).length * nGH();   // bays or houses added/removed: re-size power and water
   if (nm !== SYS.designed.nMods && G.modules.every(m => m.build > 0.99 || m.removing)) { SYS.manual = false; designSystem(); log('ai', `Farm now ${nm} modules → solar ${SYS.pvKWp.toFixed(1)} kWp, battery ${Math.round(SYS.batKWh / 0.9)} kWh, cistern ${(SYS.cisternL / 1000).toFixed(1)} m³`, true); }
   const L = ghBounds(); if (!PWR.key.endsWith(`|${nGH()}|${L.z0}|${L.z1}`)) buildPowerAndWater();
+  PWR.group.visible = S.mode !== 'packed';
   const sn = CLIMATE.panelSnow; PWR.snowI.visible = sn > 0.2; PWR.snowMat.opacity = clamp(sn / 2, 0, 0.95);
   const lv = SYS.cisternL ? SYS.cistern / SYS.cisternL : 0;
   for (const w of PWR.water) w.w.scale.y = Math.max(0.01, lv * w.h);
@@ -6085,6 +6142,7 @@ function histPush(B) {
   for (const bed of G.beds) {
     let H = HIST.bed[bed.id];
     if (!H) H = HIST.bed[bed.id] = { i0: n, m: [], y: [], p: [], g: [] };
+    for (let k = H.i0 + H.m.length; k < n; k++) for (const f of ['m', 'y', 'p', 'g']) H[f].push(null);   // a removed bay added back: no samples for the hours it was gone
     const plants = bed.spots.filter(s => s.plant && !s.plant.dead);
     H.m.push(bed.moisture * 100); H.y.push(bed.yieldKg || 0); H.p.push(plants.length);
     H.g.push(plants.length ? plants.reduce((s, s2) => s + s2.plant.vis, 0) / plants.length * 100 : 0);
@@ -6111,8 +6169,8 @@ function histRange(range, specs) {
   const cols = specs.map(s => typeof s.fn === 'function' ? HIST.t.map((_, i) => s.fn(i)) : histVals(s.key));
   if (!daily) return { daily, ts: HIST.t.slice(i0), vals: cols.map((c, j) => c.slice(i0).map(v => v == null ? null : v * (specs[j].k || 1))) };
   const ts = [], vals = specs.map(() => []);
-  for (let a = i0; a < N; a += 24) {
-    const b = Math.min(N, a + 24); ts.push(HIST.t[b - 1]);
+  for (let a = i0; a + 24 <= N; a += 24) {   // whole days only: a partial newest day would undercount summed series
+    const b = a + 24; ts.push(HIST.t[b - 1]);
     specs.forEach((s, j) => {
       const seg = cols[j].slice(a, b).filter(v => v != null);
       let v = null;
@@ -6138,6 +6196,7 @@ const DEP_STEPS = ['Crates staged on pad', 'Sills unfolded & levelled', 'Hoops r
 const PACK_STEPS = ['Arms parked & lifted', 'Cameras offline', 'Beds & equipment stowed', 'Film rolled', 'Rail decoupled', 'Purlins stowed', 'Hoops folded', 'Sills folded', 'Crated for transport', 'Ready to ship'];
 const NUM = v => v === 0 ? '0' : v >= 1000 ? Math.round(v).toLocaleString('en-US') : v >= 100 ? v.toFixed(0) : v >= 10 ? v.toFixed(1) : v.toFixed(2);
 const covCol = c => c >= 1 ? 'var(--ok)' : c >= 0.5 ? 'var(--warn)' : 'var(--bad)';
+const setOn = (el, on) => { el.classList.toggle('on', !!on); el.setAttribute('aria-pressed', on ? 'true' : 'false'); };
 
 const UI = {
   logBuf: [], lastTick: 0, pipSrc: 'A', camIdx: 0, frame: 0, tab: 'ops',
@@ -6155,50 +6214,55 @@ const UI = {
       const b = e.target.closest('button'); if (!b) return;
       if (b.dataset.src === 'cam' && this.pipSrc === 'cam') this.camIdx++;
       this.pipSrc = b.dataset.src;
-      [...$('pipSrc').children].forEach(x => x.classList.toggle('on', x === b));
+      [...$('pipSrc').children].forEach(x => setOn(x, x === b));
     });
     $('leftTabs').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; this.tab = b.dataset.tab; this.syncTabs(); this.lastTick = 0; });
-    $('profile').addEventListener('change', e => { FOOD.profile = e.target.value; this.lastTick = 0; });
-    document.querySelectorAll('button.tog').forEach(b => b.addEventListener('click', () => { const k = b.dataset.t; S[k] = !S[k]; b.classList.toggle('on', S[k]); applyLayers(); }));
+    $('profile').addEventListener('change', e => { FOOD.profile = e.target.value; _fsC.n = -1; REPORT.cache.foodN = -1; this.lastTick = 0; });
+    document.querySelectorAll('button.tog').forEach(b => b.addEventListener('click', () => { const k = b.dataset.t; S[k] = !S[k]; setOn(b, S[k]); applyLayers(); }));
     $('bDeploy').onclick = () => { if (S.mode === 'running') startPack(); else if (S.mode === 'packed') startDeploy(); };
     $('bAdd').onclick = addBay; $('bRem').onclick = removeBay;
     $('bPest').onclick = () => scenario('pest'); $('bWeed').onclick = () => scenario('weed'); $('bDry').onclick = () => scenario('dry'); $('bCold').onclick = () => scenario('cold'); $('bStorm').onclick = () => scenario('storm'); $('bSnow').onclick = () => scenario('snow'); $('bCoop').onclick = () => scenario('coop');
-    $('heaterBtn').onclick = () => { CLIMATE.heaterOn = !CLIMATE.heaterOn; log('sys', `Frost heater ${CLIMATE.heaterOn ? 'enabled' : 'disabled'} by operator`, true); this.lastTick = 0; };
+    $('heaterBtn').onclick = () => { if (DESIGN.heat === 'none') return; CLIMATE.heaterOn = !CLIMATE.heaterOn; log('sys', `Frost heater ${CLIMATE.heaterOn ? 'enabled' : 'disabled'} by operator`, true); this.lastTick = 0; };
     const cc = $('climChart');
     cc.addEventListener('pointermove', e => { const r = cc.getBoundingClientRect(); this.chartHover = (e.clientX - r.left) / r.width; drawClimChart(); });
     cc.addEventListener('pointerleave', () => { this.chartHover = null; drawClimChart(); });
     $('bHuman').onclick = toggleHuman;
-    $('helpBtn').onclick = () => $('help').classList.add('show'); $('helpClose').onclick = () => $('help').classList.remove('show');
+    $('helpBtn').onclick = () => { $('help').classList.add('show'); $('help').focus({ preventScroll: true }); }; $('helpClose').onclick = () => $('help').classList.remove('show');
     $('help').addEventListener('click', e => { if (e.target.id === 'help') $('help').classList.remove('show'); });
     $('bLayers').onclick = () => { const p = $('layersPop'), r = $('bLayers').getBoundingClientRect(); p.style.right = Math.max(10, innerWidth - r.right) + 'px'; p.classList.toggle('show'); };
     $('depSkip').onclick = skipDeploy;
-    $('tLeft').onclick = () => { $('left').classList.toggle('show'); $('right').classList.remove('show'); };
-    $('tRight').onclick = () => { $('right').classList.toggle('show'); $('left').classList.remove('show'); };
+    $('tLeft').onclick = () => { $('left').classList.toggle('show'); $('right').classList.remove('show'); this.syncToggles(); };
+    $('tRight').onclick = () => { $('right').classList.toggle('show'); $('left').classList.remove('show'); this.syncToggles(); };
+    this.syncToggles();
     window.addEventListener('keydown', e => {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
-      if (e.code === 'Space') { S.paused = !S.paused; this.syncSpeed(); e.preventDefault(); }
+      if (e.code === 'Space' && !e.target.closest('button')) { S.paused = !S.paused; this.syncSpeed(); e.preventDefault(); }
       const v = ['orbit', 'inside', 'followA', 'followB', 'top', 'cinematic'][+e.key - 1]; if (v) setView(v);
-      if (e.key === 'h' || e.key === '?') $('help').classList.toggle('show');
-      if (e.key === 'Escape') { $('help').classList.remove('show'); selectPlant(null); }
+      if (e.key === 'h' || e.key === '?') { if ($('help').classList.toggle('show')) $('help').focus({ preventScroll: true }); }
+      if (e.key === 'Escape') { if ($('help').classList.contains('show')) $('help').classList.remove('show'); else if (REPORT.open) $('rClose').click(); selectPlant(null); }
     });
+    window.addEventListener('click', e => { if (performance.now() - (orbit.tapT || 0) < 400 && Math.abs(e.clientX - orbit.tapX) < 12 && Math.abs(e.clientY - orbit.tapY) < 12 && e.target.closest && e.target.closest('#selCard')) { e.preventDefault(); e.stopPropagation(); return; } const b = e.detail > 0 && e.target.closest && e.target.closest('button'); if (b) b.blur(); }, true);   // a touch tap's click is hit-tested after the card it opened is drawn: keep it off the card's ×
     $('depSteps').innerHTML = DEP_STEPS.map(s => `<li>${s}</li>`).join('');
     $('profile').innerHTML = Object.entries(PROFILES).map(([k, p]) => `<option value="${k}"${k === FOOD.profile ? ' selected' : ''}>${p.label} · ${p.kcal.toLocaleString('en-US')} kcal</option>`).join('');
-    this.syncSpeed(); this.syncViewButtons(); this.syncTabs();
+    this.syncSpeed(); this.syncViewButtons(); this.syncTabs(); [...$('pipSrc').children].forEach(x => setOn(x, x.dataset.src === this.pipSrc)); document.querySelectorAll('button.tog').forEach(b => setOn(b, S[b.dataset.t]));
   },
-  syncSpeed() { [...$('speed').children].forEach(b => { const s = +b.dataset.s; b.classList.toggle('on', s === 0 ? S.paused : (!S.paused && s === S.speed)); }); },
+  syncSpeed() { [...$('speed').children].forEach(b => { const s = +b.dataset.s; setOn(b, s === 0 ? S.paused : (!S.paused && s === S.speed)); }); },
   syncSwitches() {
     const h = SWITCHES.map(s => `<button class="sw2${isOn(s.k) ? ' on' : ''}" data-sw="${s.k}" title="${esc(s.note)}"><i></i><span>${s.label}<small>${isOn(s.k) ? 'on' : 'off'} · ${esc(s.note)}</small></span></button>`).join('');
     for (const id of ['swBody', 'rSw']) if ($(id)) $(id).innerHTML = h;
   },
-  syncViewButtons() { [...$('views').children].forEach(b => b.classList.toggle('on', b.dataset.v === orbit.mode)); },
+  syncViewButtons() { [...$('views').children].forEach(b => setOn(b, b.dataset.v === orbit.mode)); },
   syncTabs() {
-    [...$('leftTabs').children].forEach(b => b.classList.toggle('on', b.dataset.tab === this.tab));
+    [...$('leftTabs').children].forEach(b => setOn(b, b.dataset.tab === this.tab));
     for (const t of ['ops', 'diet', 'crops']) $('pane-' + t).hidden = t !== this.tab;
   },
+  syncToggles() { for (const [b, c] of [['tLeft', 'left'], ['tRight', 'right']]) { const on = $(c).classList.contains('show'); $(b).classList.toggle('on', on); $(b).setAttribute('aria-expanded', String(on)); } },
   pipRect() {
     const el = $('pip'); if (!el || !el.offsetParent) return null;
     const r = el.getBoundingClientRect(); if (r.width < 20 || r.bottom < 0 || r.top > innerHeight) return null;
-    return { x: r.left + 1, y: r.top, w: r.width - 2, h: r.height - 1 };
+    const c = $('right').getBoundingClientRect(), cy = Math.max(r.top, c.top), cb = Math.min(r.bottom - 1, c.bottom);
+    if (cb - cy < 2) return null;
+    return { x: r.left + 1, y: r.top, w: r.width - 2, h: r.height - 1, cy, ch: cb - cy };
   },
   pipSource() {
     if (this.pipSrc === 'A' || this.pipSrc === 'B') {
@@ -6324,10 +6388,14 @@ const UI = {
     $('bDeploy').disabled = S.mode === 'deploying' || S.mode === 'packing';
     const busyBuild = G.modules.some(m => m.growing || m.removing);
     $('bAdd').disabled = $('bRem').disabled = S.mode !== 'running' || busyBuild;
-    ['bPest', 'bWeed', 'bDry', 'bCold', 'bCoop', 'bHuman'].forEach(id => $(id).disabled = S.mode !== 'running');
+    ['bPest', 'bWeed', 'bDry', 'bCold', 'bStorm', 'bSnow', 'bCoop', 'bHuman'].forEach(id => $(id).disabled = S.mode !== 'running');
     $('clim').innerHTML = `<span class="ci" style="background:#d95926"></span>${CLIMATE.Tin.toFixed(1)}° in <span class="ci" style="background:#3987e5"></span>${CLIMATE.Tout.toFixed(1)}° out${CLIMATE.fans ? ' · fans ' + CLIMATE.fans : ''}${CLIMATE.heat ? ' · heating' : ''}`;
     if (SEL.spot || SEL.cell || SEL.comp) renderSel();
     $('bHuman').classList.toggle('on', !!S.human); $('bHuman').textContent = S.human ? 'Person inside' : 'Person enters';
+    const pumpBed = G.beds.some(b => b.crop === 'pumpkin' && b.module.ready());
+    if (!pumpBed) $('bCoop').disabled = true;
+    const coopTip = pumpBed ? 'Jumps one pumpkin vine to maturity to show the two-arm lift' : 'No bed is growing pumpkins now: the calorie-first plan has none (pick Mixed vegetables under Bed plan in the System report), and a mixed-plan pumpkin bed may be on a rotation crop';
+    if ($('bCoop').title !== coopTip) $('bCoop').title = coopTip;
     S.detLog = S.detLog.filter(t => S.t - t < 3600);
     $('detRate').textContent = `${S.detLog.length}/h`;
     if (this.tab === 'ops') this.opsPane();
@@ -6394,12 +6462,12 @@ const UI = {
   nurseryPane() {
     const N = NURSERY, cs = N.cells, used = k => cs.filter(c => c.kind === k && c.state !== 'empty').length, tot = k => cs.filter(c => c.kind === k).length;
     const by = {};
-    for (const c of cs) if (c.crop && c.state !== 'empty') { const b = by[c.crop] = by[c.crop] || { sown: 0, up: 0, ready: 0 }; if (c.state === 'ready') b.ready++; else if (c.state === 'up') b.up++; else b.sown++; }
+    for (const c of cs) if (c.crop && c.state !== 'empty') { const b = by[c.crop] = by[c.crop] || { queued: 0, sown: 0, up: 0, ready: 0 }; if (c.state === 'ready' || c.state === 'carried') b.ready++; else if (c.state === 'up') b.up++; else if (c.state === 'reserved') b.queued++; else b.sown++; }
     const next = cs.filter(c => c.state === 'up' && c.forSpot).map(c => ({ c, d: (CROPS[c.crop].prop - c.age) / Math.max(0.3, tempFactor(CROPS[c.crop], N.Tn)) })).sort((a, b) => a.d - b.d)[0];
     $('nurseryBody').innerHTML = `
       <div class="row"><span class="k">Plug cells · pots</span><span class="v">${used('plug')}/${tot('plug')} · ${used('pot')}/${tot('pot')}</span></div>
       <div class="row"><span class="k">Root zone · heat mat</span><span class="v">${N.Tn.toFixed(1)} °C · ${N.mat ? 'on' : 'off'} · lights ${N.lights ? 'on' : 'off'}</span></div>
-      ${Object.keys(by).length ? `<div class="nh" style="margin-top:4px">${Object.entries(by).map(([c, b]) => `<div><span class="sw" style="background:${CROPS[c].color}"></span>${CROPS[c].label}<span>${b.sown ? b.sown + ' sown · ' : ''}${b.up} growing · ${b.ready} ready</span></div>`).join('')}</div>` : '<div class="note">Empty — the planner sows each crop so seedlings are ready when a bed spot frees up.</div>'}
+      ${Object.keys(by).length ? `<div class="nh" style="margin-top:4px">${Object.entries(by).map(([c, b]) => `<div><span class="sw" style="background:${CROPS[c].color}"></span>${CROPS[c].label}<span>${b.queued ? b.queued + ' to sow · ' : ''}${b.sown ? b.sown + ' sown · ' : ''}${b.up} growing · ${b.ready} ready</span></div>`).join('')}</div>` : '<div class="note">Empty — the planner sows each crop so seedlings are ready when a bed spot frees up.</div>'}
       <div class="row" style="margin-top:4px"><span class="k">Season totals</span><span class="v">${S.stats.sown || 0} sown · ${S.stats.germFail || 0} re-sown · ${S.stats.transplanted || 0} transplanted</span></div>
       ${next ? `<div class="row"><span class="k">Next ready</span><span class="v">${CROPS[next.c.crop].label.toLowerCase()} ${next.c.id} in ~${Math.ceil(next.d)} d</span></div>` : ''}`;
   },
@@ -6409,7 +6477,7 @@ const UI = {
     $('climStage').textContent = C.stage;
     $('climBody').innerHTML = `
       <div class="tri"><div><b style="color:var(--tx)">${C.Tin.toFixed(1)}°</b><span>inside</span></div><div><b>${C.Tout.toFixed(1)}°</b><span>outside</span></div><div><b>${C.Ts.toFixed(1)}°</b><span>soil</span></div></div>
-      <div class="row"><span class="k">Setpoints</span><span class="v">vent ${C.setDay}° day / ${C.setNight}° night · heat ${C.setHeat}°</span></div>
+      <div class="row"><span class="k">Setpoints</span><span class="v">vent ${C.setDay}° day / ${C.setNight}° night · heat ${!C.heaterOn || C.setHeat < -40 ? 'off' : (C.setHeat + 1) + '°'}</span></div>
       <div class="row"><span class="k">Roll-up sides</span><span class="v">${pct(C.side)} open</span></div>
       <div class="row"><span class="k">Exhaust fans</span><span class="v">stage ${C.fans} of 2 · ${C.fans * fansPerStage(floorArea())} fans · ${(C.fans * fanStageKW(floorArea())).toFixed(2)} kW</span></div>
       <div class="row"><span class="k">Circulation fans</span><span class="v">${C.haf ? 'running' : 'off (sides open)'}</span></div>
@@ -6419,9 +6487,9 @@ const UI = {
       <div class="row"><span class="k">Sky · sun</span><span class="v">${sky} · ${C.I.toFixed(0)} W/m² · ${daylightHours().toFixed(1)} h day</span></div>
       <div class="row"><span class="k">Weather</span><span class="v">${C.precip > 0.02 ? (C.snowing ? `snow ${(C.precip).toFixed(1)} cm/h` : `rain ${C.precip.toFixed(1)} mm/h`) : 'dry'} · wind ${C.wind.toFixed(0)} m/s from ${['E','SE','S','SW','W','NW','N','NE'][((Math.round((C.windDir || 0) / (Math.PI / 4)) % 8) + 8) % 8]}${C.storm ? ' · <span class="warn">storm</span>' : ''} · light ${C.dli24.toFixed(0)} mol/m²·d</span></div>
       <div class="row"><span class="k">Inside today</span><span class="v">${mn.toFixed(1)}° – ${mx.toFixed(1)}°</span></div>
-      <div class="row"><span class="k">Season use</span><span class="v">fans ${NUM(C.kwhFan)} kWh · heat ${NUM(SYS.E.cat['Greenhouse heat'] || 0)} kWh${DESIGN.heat === 'propane' ? ` (${NUM(SYS.E.propaneGal)} gal)` : ''} · pads ${NUM(C.padL)} L</span></div>
+      <div class="row"><span class="k">Season use</span><span class="v">fans & pads ${NUM(SYS.E.cat['Fans & pads'] || 0)} kWh · heat ${NUM(SYS.E.cat['Greenhouse heat'] || 0)} kWh${DESIGN.heat === 'propane' ? ` (${NUM(SYS.E.propaneGal)} gal)` : ''} · pads ${NUM(SYS.W.pads)} L · ${nGH() > 1 ? `all ${nGH()} greenhouses` : 'one greenhouse'}</span></div>
       <div class="row"><span class="k">Hours above 32 °C</span><span class="v">${NUM(C.hotHours)} h</span></div>`;
-    $('heaterBtn').textContent = C.heaterOn ? 'Heater: on' : 'Heater: off';
+    $('heaterBtn').textContent = DESIGN.heat === 'none' ? 'No heater' : C.heaterOn ? 'Heater: on' : 'Heater: off'; $('heaterBtn').disabled = DESIGN.heat === 'none';
     $('heaterBtn').classList.toggle('on', C.heaterOn);
     drawClimChart();
   },
@@ -6434,14 +6502,14 @@ const UI = {
     const a7 = FOOD.hist.slice(-7), aKcal = a7.length ? a7.reduce((s, d) => s + (d.aIn ? d.aIn[0] : 0), 0) / a7.length : 0, aProt = a7.length ? a7.reduce((s, d) => s + (d.aIn ? d.aIn[1] : 0), 0) / a7.length : 0;
     if (aKcal > 1) h += `<div class="row"><span class="k">From eggs and fish</span><span class="v">${NUM(aKcal)} kcal · ${aProt.toFixed(0)} g protein a day (${pct(aProt / T[1])} of protein)</span></div>`;
     if (avg && bought > 1) h += `<div class="row"><span class="k">Bought staples</span><span class="v"><span class="warn">${NUM(bought)} g/day rice + beans · ${NUM(bought * 3.56)} kcal</span></span></div>`;
-    if (days < 120) h += `<div class="note" style="margin-top:-2px">Stores start empty, so the first months are bridged with bought rice and beans until roots, beans and squash come in. The farm is sized so that from year 2 on, nothing but oil and supplements is bought.</div>`;
+    if (days < 120) h += `<div class="note" style="margin-top:-2px">Stores start empty, so the first months are bridged with bought rice and beans until ${DESIGN.plan === 'staple' ? 'roots and beans' : 'roots, beans and squash'} come in. The farm is sized so that from year 2 on, nothing but oil and supplements is bought.</div>`;
     h += `<div class="nlist">`;
     NUTR.forEach((n, i) => {
       const cov = avg ? avg[i] / T[i] : 0, covT = tot ? tot[i] / T[i] : 0, none = n.k === 'b12' || n.k === 'vitD';
       h += `<div class="nrow" title="${n.label}: ${avg ? NUM(avg[i]) : 0} ${n.unit} grown + ${tot && avg ? NUM(tot[i] - avg[i]) : 0} ${n.unit} bought, per day, of ${NUM(T[i])} ${n.unit}"><span class="nk">${n.label}</span><span class="nb"><i style="width:${Math.min(100, covT * 100).toFixed(1)}%;background:${covCol(covT)};opacity:.38"></i><i style="width:${Math.min(100, cov * 100).toFixed(1)}%;background:${covCol(covT)}"></i></span><span class="nv">${tot ? pct(covT) : '—'}</span></div>`;
     });
     h += `</div><div class="note">Bars show the whole diet; the solid part is grown on the farm, the faded part bought: canola oil for fat (target 20% of energy), a B12 and a vitamin D supplement, a calcium + zinc tablet on days the crops fall short, and any rice and beans needed while stores are short.</div>`;
-    if (days) { const all = FOOD.avgIntake(days); h += `<div class="row" style="margin-top:6px"><span class="k">Average since planting</span><span class="v">${pct(all[0] / T[0])} energy · ${pct(all[1] / T[1])} protein</span></div>`; }
+    if (days) { const all = FOOD.sumN.map(v => v / FOOD.nDays); h += `<div class="row" style="margin-top:6px"><span class="k">Average since planting</span><span class="v">${pct(all[0] / T[0])} energy · ${pct(all[1] / T[1])} protein</span></div>`; }
     const nxt = {};
     for (const p of plantsAll()) { const d = nextHarvestIn(p); if (d == null) continue; const r = Math.max(0.25, p.rateAvg || 0.85), cal = d / r; if (!nxt[p.crop] || cal < nxt[p.crop]) nxt[p.crop] = cal; }
     const nl = Object.entries(nxt).sort((a, b) => a[1] - b[1]);
@@ -6477,7 +6545,7 @@ const UI = {
   },
   cropsPane() {
     const days = Math.max(0, (S.t - FOOD.startT) / S.DAY);
-    const beds = {}, bedA = {}; for (const b of G.beds) if (b.module.ready()) { beds[b.crop] = (beds[b.crop] || 0) + 1; bedA[b.crop] = (bedA[b.crop] || 0) + b.area; }
+    const beds = {}, bedA = {}, bedS = {}; for (const b of G.beds) if (b.module.ready()) { beds[b.crop] = (beds[b.crop] || 0) + 1; bedA[b.crop] = (bedA[b.crop] || 0) + b.area; bedS[b.crop] = (bedS[b.crop] || 0) + b.spots.length; }
     const MAXD = 240, MIND = -60, SPAN = MAXD - MIND, X = d => ((d - MIND) / SPAN * 100).toFixed(2), ages = {};
     for (const p of plantsAll()) (ages[p.crop] = ages[p.crop] || new Set()).add(Math.round(p.age / 2) * 2);
     let h = `<div class="sec" style="margin-top:0">Crop timeline · days from transplanting (nursery before 0)</div><div class="tl">`;
@@ -6497,7 +6565,7 @@ const UI = {
       const first = sp.kind === 'leaf' ? sp.first : sp.kind === 'fruit' ? sp.formStart + sp.ripen : sp.kind === 'big' ? sp.fruitSets[0] + sp.ripen : sp.mature;
       const meas = nb && days >= 14 ? (FOOD.harvest[c] || 0) / FARM.n * 365 / days / bedA[c] : null;
       const per = sp.kind === 'pull' ? `${(e.kgPerSpot * 1000).toFixed(0)} g/spot` : `${e.kgPerSpot.toFixed(2)} kg`;
-      h += `<tr title="${esc(sp.src)}"><td><span class="sw" style="background:${sp.color}"></span>${sp.label}<div class="vt">${sp.variety} · ${sp.start} · ${nb} bed${nb === 1 ? '' : 's'}, ${nb * e.spots} ${sp.kind === 'pull' ? 'spots' : 'plants'}</div></td><td>${first}${sp.prop ? `<div class="vt">+${sp.prop} nursery</div>` : sp.emerge ? `<div class="vt">incl. ${sp.emerge} to emerge</div>` : ''}</td><td>${per}</td><td>${e.kgM2Yr.toFixed(1)}${meas != null ? ` / <b>${meas.toFixed(1)}</b>` : ''}</td><td>${kgStr(FOOD.harvest[c] || 0)}</td></tr>`;
+      h += `<tr title="${esc(sp.src)}"><td><span class="sw" style="background:${sp.color}"></span>${sp.label}<div class="vt">${sp.variety} · ${sp.start} · ${nb} bed${nb === 1 ? '' : 's'}, ${bedS[c] || 0} ${sp.kind === 'pull' ? 'spots' : 'plants'}</div></td><td>${first}${sp.prop ? `<div class="vt">+${sp.prop} nursery</div>` : sp.emerge ? `<div class="vt">incl. ${sp.emerge} to emerge</div>` : ''}</td><td>${per}</td><td>${e.kgM2Yr.toFixed(1)}${meas != null ? ` / <b>${meas.toFixed(1)}</b>` : ''}</td><td>${kgStr(FOOD.harvest[c] || 0)}</td></tr>`;
     }
     h += `</tbody></table><div class="note">Hover a row for its source. Yield per plant is per crop cycle (one harvest for lettuce, roots and beans; the whole picking season for tomato, pepper, kale and basil). Measured kg/m²·yr appears after 14 days. The full table — nursery time, days to harvest, plants and yield per m², calories and protein per m², and what one bed does here in a year — is in the System report and in <b>Export ▾</b>.</div>
       <div class="sec">Sources</div><ul class="src">${Object.values(CROPS).map(s => `<li><b>${s.label}:</b> ${esc(s.src)}</li>`).join('')}<li><b>Nutrients:</b> USDA FoodData Central (SR Legacy; kale: Foundation Foods), per 100 g edible portion.</li><li><b>Needs:</b> NASEM Dietary Reference Intakes; energy from Dietary Guidelines 2020–2025.</li></ul>`;
@@ -6595,7 +6663,7 @@ function pickables() {
   const out = [];
   for (const b of G.beds) { if (!b.module.ready()) continue; out.push(b.soil); for (const s of b.spots) if (s.plant) out.push(s.plant.group); }
   if (NURSERY.group) out.push(NURSERY.group.children.find(o => o.userData.nursery));
-  for (let i = COMP_OBJS.length - 1; i >= 0; i--) { const o = COMP_OBJS[i]; if (attached(o)) out.push(o); else if (!o.parent) COMP_OBJS.splice(i, 1); }
+  for (let i = COMP_OBJS.length - 1; i >= 0; i--) { const o = COMP_OBJS[i]; if (attached(o)) out.push(o); else COMP_OBJS.splice(i, 1); }
   return out;
 }
 function pickAt(cx, cy) {
@@ -6622,9 +6690,9 @@ function pickAt(cx, cy) {
 }
 function onCanvasTap(cx, cy) { selectPlant(pickAt(cx, cy)); }
 function selectPlant(x) {
-  SEL.cell = x && x.cell ? x.cell : null;
+  SEL.cell = x && !x.bed && x.cell ? x.cell : null;
   SEL.comp = x && x.comp ? x.comp : null;
-  SEL.spot = x && !x.cell && !x.comp ? x : null; SEL.built = null; SEL.hover = null;
+  SEL.spot = x && x.bed ? x : null; SEL.built = null; SEL.hover = null;
   $('selCard').hidden = !SEL.spot && !SEL.cell && !SEL.comp;
   if (SEL.spot || SEL.cell || SEL.comp) renderSel();
 }
@@ -6685,8 +6753,8 @@ function renderSel() {
       const cams = G.cams.filter(c => c.module.build > 0.8), m = s.bed.module;
       const i = cams.findIndex(c => c.module === m && (c.side < 0) === (s.x > 0));
       UI.pipSrc = 'cam'; UI.camIdx = Math.max(0, i);
-      [...$('pipSrc').children].forEach(x => x.classList.toggle('on', x.dataset.src === 'cam'));
-      if (innerWidth < 780) { $('right').classList.add('show'); $('left').classList.remove('show'); }
+      [...$('pipSrc').children].forEach(x => setOn(x, x.dataset.src === 'cam'));
+      if (getComputedStyle($('right')).display === 'none') { $('right').classList.add('show'); $('left').classList.remove('show'); UI.syncToggles(); }
     };
     SEL.built = key;
   }
@@ -6695,7 +6763,7 @@ function renderSel() {
   if (p) {
     const st = plantStage(p), T = CLIMATE.Tin, nh = nextHarvestIn(p), rate = Math.max(0.25, p.rateAvg || 0.85);
     const MAXD = sp.kind === 'head' ? 60 : sp.life + 5;
-    const bar = cropStages(p.crop).map(g => `<i style="left:${(g.a / MAXD * 100).toFixed(2)}%;width:${((Math.min(g.b, MAXD) - g.a) / MAXD * 100).toFixed(2)}%;background:${STAGE_COL[g.k]}"></i>`).join('');
+    const bar = cropStages(p.crop).filter(g => g.a >= 0).map(g => `<i style="left:${(g.a / MAXD * 100).toFixed(2)}%;width:${((Math.min(g.b, MAXD) - g.a) / MAXD * 100).toFixed(2)}%;background:${STAGE_COL[g.k]}"></i>`).join('');
     h += `<div class="stg"><span style="background:${STAGE_COL[st.k]}"></span>${st.label}</div>
       <div class="tlb one">${bar}<b style="left:${clamp(p.age / MAXD * 100, 0, 100).toFixed(2)}%"></b></div>
       <div class="tlx"><span>planted</span><span>day ${Math.round(MAXD)}</span></div>`;
@@ -6749,7 +6817,7 @@ const COMP = {
     title: 'Battery bank', color: C1, sw: 'solar', sub: () => `LiFePO4 48 V · ${Math.round(SYS.batKWh / 0.9)} kWh nominal (${SYS.batKWh} kWh usable) · inverter/charger`,
     center: () => PWR.batPos || V3(GH.HW + 0.75, 0, -1.6), r: 0.9,
     rows() {
-      const k = SYS.kwNow || { pv: 0, load: 0 }, net = k.pv - k.load, f = SYS.batKWh ? SYS.soc / SYS.batKWh : 0;
+      const k = SYS.kwNow || { pv: 0, load: 0 }, net = isOn('solar') ? k.pv + (k.wind || 0) - k.load : 0, f = SYS.batKWh ? SYS.soc / SYS.batKWh : 0;
       const avg = SYS.hours.slice(-24).reduce((s, h) => s + h[0], 0) / Math.max(1, Math.min(24, SYS.hours.length));
       return row2('Charge', `<b>${pct(f)}</b> · ${SYS.soc.toFixed(1)} of ${SYS.batKWh} kWh`)
         + row2('Now', net > 0.02 ? `charging ${kWfmt(Math.min(net, (SYS.batKWh - SYS.soc) > 0.05 ? net : 0))} kW` : net < -0.02 ? `discharging ${kWfmt(-net)} kW` : 'idle')
@@ -6766,7 +6834,7 @@ const COMP = {
     title: 'Solar array', color: C4, sw: 'solar', sub: () => `${Math.ceil(SYS.pvKWp / 0.44)} × 440 W modules · ${SYS.pvKWp.toFixed(1)} kWp · ${Math.round(PV_TILT() / DEG)}° tilt facing ${SITE.lat >= 0 ? 'south' : 'north'}`,
     center: () => PWR.pvPos || V3(GH.HW + 9, 0, 0), r: 3.5,
     rows() {
-      const k = SYS.kwNow || { pv: 0 }, days = Math.max(1, SYS.days.length);
+      const k = SYS.kwNow || { pv: 0 }, days = Math.max(1, SYS.nDays);
       return row2('Output now', `<b>${kWfmt(k.pv)} kW</b> · ${pct(k.pv / Math.max(0.01, SYS.pvKWp))} of rating`)
         + row2('Today', `${todaySum('pv').toFixed(1)} kWh`)
         + row2('So far', `${fmt0(SYS.E.pv)} kWh · ${(SYS.E.pv / Math.max(0.01, SYS.pvKWp) / days * 365).toFixed(0)} kWh/kWp·yr`)
@@ -6862,12 +6930,12 @@ const COMP = {
   },
   heater: {
     title: () => DESIGN.heat === 'propane' ? 'Propane heater' : DESIGN.heat === 'none' ? 'Frost heater (not fitted)' : 'Greenhouse heat pump', color: C2,
-    sub: () => DESIGN.heat === 'propane' ? 'vented propane unit heater, 80 % efficient · frost protection only' : 'air-to-air heat pump · frost protection only',
+    sub: () => DESIGN.heat === 'propane' ? 'vented propane unit heater, 80 % efficient · frost protection only' : DESIGN.heat === 'none' ? 'no heater fitted · the tunnel runs unheated' : 'air-to-air heat pump · frost protection only',
     center: () => PWR.heatPos || V3(GH.HW + 0.75, 0, 2.4), r: 0.9,
     rows() {
-      const C = CLIMATE, th = C.heat * CL_HEAT_W * floorArea() / 1000, tgt = C.setHeat + 1;
-      const need = tgt < -40 ? 'nothing planted needs protection' : `holding ${tgt.toFixed(0)} °C for what is in the beds`;
-      return row2('Output now', th > 0.01 ? `<b>${kWfmt(th)} kW</b> heat${DESIGN.heat === 'hp' ? ` · ${kWfmt(th / copGH(C.Tout))} kW electric (COP ${copGH(C.Tout).toFixed(1)})` : ''}` : 'standby')
+      const C = CLIMATE, th = C.heat * CL_HEAT_W * floorArea() / 1000 * (FARM.n + FARM.market), tgt = C.setHeat + 1;
+      const need = DESIGN.heat === 'none' ? 'none — no heater fitted' : !C.heaterOn ? 'none — heater switched off by the operator' : tgt < -40 ? 'nothing planted needs protection' : `holding ${tgt.toFixed(0)} °C for what is in the beds`;
+      return row2('Output now (all greenhouses)', th > 0.01 ? `<b>${kWfmt(th)} kW</b> heat${DESIGN.heat === 'hp' ? ` · ${kWfmt(th / copGH(C.Tout))} kW electric (COP ${copGH(C.Tout).toFixed(1)})` : ''}` : 'standby')
         + row2('Target', need) + row2('Inside · outside', `${C.Tin.toFixed(1)} °C · ${C.Tout.toFixed(1)} °C`)
         + row2('Heat delivered so far', `${fmt0(SYS.E.heatTh)} kWh${DESIGN.heat === 'propane' ? ` · ${SYS.E.propaneGal.toFixed(0)} gal propane` : ` · ${fmt0(SYS.E.cat['Greenhouse heat'] || 0)} kWh electric`}`);
     },
@@ -6895,7 +6963,7 @@ const COMP = {
     title: 'Weather mast', color: C1, sub: () => `${SITE.name} · ${SITE.note}`,
     center: () => V3(-GH.HW - 2.0, 0, 1.5), r: 0.7,
     rows() {
-      const C = CLIMATE, sky = C.cloud < 0.25 ? 'clear' : C.cloud < 0.6 ? 'partly cloudy' : 'overcast';
+      const C = CLIMATE, sky = C.cloud < 0.25 ? 'clear' : C.cloud < 0.65 ? 'partly cloudy' : 'overcast';
       return row2('Outside', `<b>${C.Tout.toFixed(1)} °C</b> · RH ${pct(C.rh)} · ${sky}`)
         + row2('Now', C.precip > 0.02 ? (C.snowing ? `snowing ${C.precip.toFixed(1)} cm/h` : `raining ${C.precip.toFixed(1)} mm/h`) : 'dry')
         + row2('Wind', `${C.wind.toFixed(1)} m/s${C.storm ? ' · <span class="warn">storm — sides closed</span>' : ''}`)
@@ -6929,7 +6997,7 @@ const COMP = {
     title: 'Wind turbines', color: '#7fa6c4', sw: 'wind', sub: () => SYS.nWind ? `${SYS.nWind} × homebrew 3 m axial-flux turbine on an 18 m guyed tilt-up pipe tower · ~0.7 kW at 11 m/s` : 'none fitted',
     center: () => turbinePos(Math.max(0, (SYS.nWind || 1) - 1) / 2), r: 6,
     rows() {
-      const k = SYS.kwNow || {}, days = Math.max(1, SYS.days.length), d = SYS.designed;
+      const k = SYS.kwNow || {}, days = Math.max(1, SYS.nDays), d = SYS.designed;
       if (!SYS.nWind) return row2('Fitted', 'none') + row2('Here', `one turbine would make ~${fmt0(d ? d.windYr : 0)} kWh a year (wind ${SITE.wind} m/s mean at 10 m) — the design found extra solar and battery cheaper`) + row2('To fit some', 'System report → Wind turbines → a number, then Apply & restart');
       return row2('Wind now', `${CLIMATE.wind.toFixed(1)} m/s at 10 m · ${(CLIMATE.wind * WIND.hub).toFixed(1)} m/s at the hub`)
         + row2('Output now', `<b>${kWfmt(k.wind || 0)} kW</b> from ${SYS.nWind}`) + row2('Today', `${todaySum('windKw').toFixed(1)} kWh`)
@@ -7030,13 +7098,13 @@ const COMP = {
     rows() {
       const N = NURSERY, by = {}; for (const c of N.cells) if (c.state !== 'empty' && c.crop) by[c.crop] = (by[c.crop] || 0) + 1;
       return row2('Cells in use', `${N.cells.filter(c => c.state !== 'empty').length} of ${N.cells.length}`)
-        + row2('Root zone · mat', `${N.Tn.toFixed(1)} °C · ${N.mat ? `on ${(N.matKw * 1000).toFixed(0)} W` : 'off'} · lights ${N.lights ? 'on' : 'off'}`)
+        + row2('Root zone · mat', `${N.Tn.toFixed(1)} °C · ${N.mat ? `on ${(N.matKw * 1000).toFixed(0)} W per bench` : 'off'} · lights ${N.lights ? 'on' : 'off'}`)
         + row2('By crop', Object.entries(by).map(([c, n]) => `${CROPS[c].label.toLowerCase()} ${n}`).join(' · ') || 'empty')
         + row2('Season', `${S.stats.sown || 0} sown · ${S.stats.transplanted || 0} transplanted`);
     },
     metrics: [
       { label: 'Cells in use', unit: '', series: [{ name: 'cells', key: 'cells', agg: 'max', color: '#4fa3a5' }] },
-      { label: 'Power', unit: 'W', series: [{ name: 'mats + lights', key: 'e2', agg: 'mean', color: C2, k: 1000 }] },
+      { label: 'Power', unit: 'W', series: [{ name: 'mats + lights (all greenhouses)', key: 'e2', agg: 'mean', color: C2, k: 1000 }] },
     ],
   },
 };
@@ -7087,14 +7155,14 @@ function renderComp() {
     SEL.metric = 0; if (!SEL.range) SEL.range = '48h';
     card.innerHTML = `<div class="sh"><span class="sw" style="background:${D.color}"></span><b>${esc(title)}</b><button class="x" id="selX" aria-label="Close">×</button></div>
       <div class="sv" id="compSub"></div><div id="selBody"></div>
-      <div class="cchips" id="compMetrics">${D.metrics.map((m, i) => `<button data-m="${i}"${i ? '' : ' class="on"'}>${m.label}</button>`).join('')}</div>
-      <div class="cchips rng" id="compRange">${[['48h', '48 h'], ['30d', '30 days'], ['1y', 'Year'], ['all', 'All']].map(([k, t]) => `<button data-r="${k}"${k === SEL.range ? ' class="on"' : ''}>${t}</button>`).join('')}</div>
+      <div class="cchips" id="compMetrics">${D.metrics.map((m, i) => `<button data-m="${i}"${i ? ' aria-pressed="false"' : ' class="on" aria-pressed="true"'}>${m.label}</button>`).join('')}</div>
+      <div class="cchips rng" id="compRange">${[['48h', '48 h'], ['30d', '30 days'], ['1y', 'Year'], ['all', 'All']].map(([k, t]) => `<button data-r="${k}"${k === SEL.range ? ' class="on" aria-pressed="true"' : ' aria-pressed="false"'}>${t}</button>`).join('')}</div>
       <div id="compLegend" class="rlg"></div><canvas id="compChart"></canvas>
       <div class="sb"><button id="selFocus">Focus camera</button>${D.sw ? '<button id="selSw"></button>' : ''}</div>`;
     $('selX').onclick = () => selectPlant(null);
     $('selFocus').onclick = () => { const c = D.center(); orbit.mode = 'orbit'; UI.syncViewButtons(); orbit.gt.set(c.x, 1.2, c.z); orbit.gr = Math.max(4, D.r * 4); orbit.gph = Math.min(orbit.gph, 1.05); };
-    $('compMetrics').onclick = e => { const b = e.target.closest('button'); if (!b) return; SEL.metric = +b.dataset.m; [...$('compMetrics').children].forEach(x => x.classList.toggle('on', x === b)); drawCompChart(); };
-    $('compRange').onclick = e => { const b = e.target.closest('button'); if (!b) return; SEL.range = b.dataset.r; [...$('compRange').children].forEach(x => x.classList.toggle('on', x === b)); drawCompChart(); };
+    $('compMetrics').onclick = e => { const b = e.target.closest('button'); if (!b) return; SEL.metric = +b.dataset.m; [...$('compMetrics').children].forEach(x => setOn(x, x === b)); drawCompChart(); };
+    $('compRange').onclick = e => { const b = e.target.closest('button'); if (!b) return; SEL.range = b.dataset.r; [...$('compRange').children].forEach(x => setOn(x, x === b)); drawCompChart(); };
     const cv = $('compChart');
     cv.onmousemove = e => { const r = cv.getBoundingClientRect(); SEL.hover = (e.clientX - r.left) / r.width; drawCompChart(); };
     cv.onmouseleave = () => { SEL.hover = null; drawCompChart(); };
@@ -7314,10 +7382,10 @@ function monthChart(id) {
 
 /* ---------- numbers behind the report ---------- */
 function reportNumbers() {
-  const D = SYS.days, n = D.length, f = n ? 365 / n : 0, T = dietTargets();
+  const D = SYS.days, n = D.length, f = SYS.nDays ? 365 / SYS.nDays : 0, T = dietTargets();
   const c = REPORT.cache;
-  if (c.foodN !== n) { c.food = foodSizingCached(); c.foodN = n; }
-  if (!c.simN || SYS.hours.length - c.simN >= 24 * 7) { c.sim = backupChoice(SYS.hours); c.sim5 = null; c.simN = SYS.hours.length; }
+  if (c.foodN !== SYS.nDays) { c.food = foodSizingCached(); c.foodN = SYS.nDays; }
+  const hNow = Math.floor(S.t / 3600); if (!c.simN || hNow - c.simN >= 24 * 7) { c.sim = backupChoice(SYS.hours); c.sim5 = null; c.simN = hNow; }
   const fs = c.food;
   const growNow = FARM.bays * FARM.houses;
   const needHouses = fs && isFinite(fs.housesNeed) ? Math.max(1, Math.ceil(fs.housesNeed * SHORT_OK - 1e-9)) : null, needBays = needHouses ? needHouses * FARM.bays : null;
@@ -7327,7 +7395,7 @@ function reportNumbers() {
   const kcalMet = DD.length ? mean(DD.map(d => Math.min(1, d.planPct != null ? d.planPct : d.kcalPct))) : 0, protMet = DD.length ? mean(DD.map(d => Math.min(1, d.protPct))) : 0;
   const boughtShare = DD.length ? mean(DD.map(d => (d.stapleKcal || 0) / T[0])) : 0;
   const fat = n ? mean(D.map(d => d.fat || 0)) : 0;
-  if (c.cisN !== n) { c.cis = simCistern(); c.cisN = n; }
+  if (c.cisN !== SYS.nDays) { c.cis = simCistern(); c.cisN = SYS.nDays; }
   return { D, n, f, T, fs, growNow, needBays, needHouses, big: c.big, kcalMet, protMet, boughtShare, year2, fat, sim: c.sim, sim5: c.sim5, cis: c.cis };
 }
 /* Robotics as a maker build: 3D-printed SO-101-style arms on bus servos, carriages rolling on a galvanized
@@ -7410,9 +7478,9 @@ function annualCosts(R, scale) {   // scale: 1 = as simulated; k = scaled to the
   if (SYS.E.grid > 1) add('Grid electricity (solar switched off)', scale !== 1 ? 0 : SYS.E.grid * f * PRICES.elecKWh, `${fmt0(SYS.E.grid * f)} kWh at $0.18/kWh`);
   if (DESIGN.heat === 'propane') add('Propane', SYS.E.propaneGal * f * scale * PRICES.propaneGal, `${fmt0(SYS.E.propaneGal * f * scale)} gal at $2.62`);
   const mods = (FARM.bays + 1) * (FARM.houses + FARM.market);   // grow bays + one core per house, market houses included
-  const filmFt2 = (10.2 * GH.ML * mods + FARM.houses * 2 * 25 + 2 * GH.WALL * GH.ML * mods) * 10.764 * scale * (DESIGN.cover === 'double' ? 2 : 1);
+  const filmFt2 = (10.2 * GH.ML * mods + (FARM.houses + FARM.market) * 2 * 25 + 2 * GH.WALL * GH.ML * mods) * 10.764 * scale * (DESIGN.cover === 'double' ? 2 : 1);
   add('Greenhouse film (4-year life)', filmFt2 * PRICES.film / 4, `${fmt0(filmFt2)} ft² 6-mil poly`);
-  add('Shade cloth & pads (replacement)', (GH.ML * mods * 7.2 * 10.764 * PRICES.shade / 8 + FARM.houses * 21 * PRICES.pad / 5) * scale, 'EST 8-yr cloth, 5-yr pads');
+  add('Shade cloth & pads (replacement)', (GH.ML * mods * 7.2 * 10.764 * PRICES.shade / 8 + (FARM.houses + FARM.market) * 21 * PRICES.pad / 5) * scale, 'EST 8-yr cloth, 5-yr pads');
   // food that is bought: oil and two supplements every year; rice + beans only while stores are short
   const H = SYS.days, gsum = (a, k) => a.reduce((s, d) => s + (d[k] || 0), 0);
   const oilKgYr = (H.length ? gsum(H.slice(-365), 'oilKcal') / 8.84 / Math.min(365, H.length) : oilPlanG()) * 365 / 1000;
@@ -7433,7 +7501,7 @@ function annualCosts(R, scale) {   // scale: 1 = as simulated; k = scaled to the
     add('Packaging for sales', SALE.pack * f, `bags, crates, labels at EST $${PACK_COST.toFixed(2)}/kg`);
     add('Food sold (income)', -SALE.rev * f, sold ? `${fmt0(sumKg(SALE.kg) * f)} kg/yr at farm-stand prices: ${sold} kg` : 'nothing beyond the store limit yet');
   }
-  add('Battery & inverter replacement reserve', (SYS.batKWh / 0.9 * PRICES.batKWhDIY / 12 + PRICES.inv6k / 12) * (scale !== 1 ? (R.big ? R.big.batKWh / SYS.batKWh : 1) : 1), 'EST 12-year life');
+  add('Battery & inverter replacement reserve', (SYS.batKWh / 0.9 * PRICES.batKWhDIY / 12 + PRICES.inv6k * Math.max(1, Math.ceil((SYS.designed.peakKw || 6) * 1.25 / 6)) / 12) * (scale !== 1 ? (R.big ? R.big.batKWh / SYS.batKWh : 1) : 1), 'EST 12-year life');
   return rows;
 }
 function nutrientBalance(R, scale) {
@@ -7451,7 +7519,7 @@ function reportHTML() {
   const tile = (k, v, s) => `<div class="kpi"><div class="kk">${k}</div><div class="kv${String(v).replace(/<[^>]+>/g, '').length > 13 ? ' sm' : ''}">${v}</div><div class="ks">${s}</div></div>`;
   let h = '';
   // status line
-  h += `<div class="rnote">${R.n ? `${R.n} simulated day${R.n === 1 ? '' : 's'} (${dateStr(SYS.days[0].t)} – ${dateStr(SYS.days[R.n - 1].t)})${R.n < 360 ? ' · <b>run a full year</b> for sizing that covers every season' : ''}` : 'No days simulated yet — let it run or press <b>Simulate 1 year</b>.'} · ${esc(SITE.name)} ${Math.abs(SITE.lat).toFixed(1)}°${SITE.lat >= 0 ? 'N' : 'S'} · ${DESIGN.cover} poly · ${DESIGN.heat === 'hp' ? 'heat-pump frost protection' : DESIGN.heat === 'propane' ? 'propane frost protection' : 'no heat'} · recycling ${DESIGN.recycle ? 'on' : 'off'}</div>`;
+  h += `<div class="rnote">${R.n ? `${SYS.nDays} simulated day${SYS.nDays === 1 ? '' : 's'} (${dateAt(0).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} – ${dateAt(SYS.days[R.n - 1].t).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })})${R.n < 360 ? ' · <b>run a full year</b> for sizing that covers every season' : ''}` : 'No days simulated yet — let it run or press <b>Simulate 1 year</b>.'} · ${esc(SITE.name)} ${Math.abs(SITE.lat).toFixed(1)}°${SITE.lat >= 0 ? 'N' : 'S'} · ${DESIGN.cover} poly · ${DESIGN.heat === 'hp' ? 'heat-pump frost protection' : DESIGN.heat === 'propane' ? 'propane frost protection' : 'no heat'} · recycling ${isOn('recycle') ? 'on' : 'off'}</div>`;
   // KPI tiles
   const P = FARM.plan, other = R.needHouses && R.needHouses !== FARM.houses;
   const MK = FARM.market, capNow = capitalCosts(des, R.growNow + FARM.bays * MK, FARM.houses + MK, true), capBig = other && big ? capitalCosts(big, R.needBays + FARM.bays * MK, R.needHouses + MK) : null;
@@ -7504,8 +7572,8 @@ function reportHTML() {
   h += `<h3 class="rsec">How big to feed one person indefinitely</h3>`;
   {
     const T = R.T, oilG = oilPlanG(), kcalNeed = farmKcalNeed(), ap = animalPlan();
-    h += `<p class="rp"><b>Sized before day 1.</b> Every bed of one ${8}-bay house was grown day by day through two normal years at ${esc(SITE.name)} with the same rules the simulation uses — planting windows, nursery lead time, off-season rotation crops, temperature- and light-limited growth, heat stress, frost and end-of-season pulls. Year 2's daily harvest was then replayed through the store — greens keep 1–2 weeks and surplus is dried; roots keep about 6 months and are sliced and dried before they go soft; dried beans keep 2 years; meals use whatever expires first, with no more of one staple a day than a full portion (EST 2 kg potatoes, 1.5 kg sweet potatoes, 200 g dry beans) — to find how many such houses leave no day short of <b>${fmt0(kcalNeed)} kcal</b> and <b>${fmt0(protNeed())} g protein</b> — the ${fmt0(T[0])} kcal and ${fmt0(T[1])} g targets less ${fmt0(oilG)} g of bought cooking oil (crops this lean cannot supply the fat)${ap.kcal > 1 ? ` and the ${fmt0(ap.kcal)} kcal and ${fmt0(ap.prot)} g protein a day expected from the ${[DESIGN.hens !== false ? 'eggs' : '', DESIGN.fish !== false ? 'fish' : ''].filter(Boolean).join(' and ')} (85 % of the steady-state model)` : ''}. One house yields ${fmt0(P.kcalHouseDay)} kcal/day on average; the store replay needs <b>${P.kE.toFixed(2)}</b> houses for energy and <b>${P.kP.toFixed(2)}</b> for protein${P.gapE > 0.001 ? ` <span class="warn">(even then ${pct(P.gapE)} of energy can't be grown in the right season and is bought)</span>` : ''}. With a 20 % margin for weather, pests and stress that is <b>${P.totalBays} grow bays → ${P.houses} house${P.houses > 1 ? 's' : ''} of ${P.bays} bays</b>${DESIGN.houses || DESIGN.bays ? ` (overridden here: ${farmTxt})` : ''}. ${DESIGN.plan === 'staple' ? 'Beds follow the calorie-first plan: potatoes, sweet potatoes and dry beans, with squash, kale and a little salad.' : 'Beds follow the vegetable-heavy mix; the calorie-first plan (Bed plan → Calorie-first) needs far fewer houses.'}</p>`;
-    h += `<p class="rp"><b>Checked against the simulation.</b> House 1 is simulated plant by plant; houses 2–${FARM.houses} follow the same plan on the same days, so the farm's harvest is house 1's × ${FARM.houses}. ${!fs || fs.mode === 'waiting' ? 'The check starts once a quarter of the year\'s planned harvest has come due.' : fs.mode === 'calibrated' ? `So far the simulated harvest is <b>${pct(fs.ratio)}</b> of what the plan expected for the same days, which puts the need at <b>${fs.housesNeed.toFixed(2)} houses</b>${fs.housesNeed <= FARM.houses ? ' — inside what was built.' : ' — <span class="warn">more than built</span>; at the end of year 1 the owner adds houses (they come into production over about four months).'} Once two years are simulated the check switches to the last 365 days measured directly.` : `Measured on the last 365 days: <b>${fs.housesNeed.toFixed(2)} houses</b> (energy ${fs.kE.toFixed(2)}, protein ${fs.kP.toFixed(2)})${fs.housesNeed <= FARM.houses ? ' — inside what was built.' : ' — <span class="warn">more than built</span>.'}`}${FARM.added.length ? ` The owner added ${FARM.added.map(a => `${a.k} house${a.k > 1 ? 's' : ''} on ${dateStr(a.t)}`).join(', ')}.` : ''} Year 1 starts with an empty store, so until the first staple harvests come in the owner buys rice and beans${FARM.rampKg != null ? ` (${fmt0(FARM.rampKg)} kg in year 1, ${money(FARM.rampKg * INPUT_PRICE.stapleKg)} one-time)` : FOOD.ext.stapleKg > 0.5 ? ` (${fmt0(FOOD.ext.stapleKg)} kg so far)` : ''}; from year 2 the store carries over and the farm, the oil and supplements (B12 and vitamin D, plus calcium and zinc on days the crops fall short) cover every day.</p>`;
+    h += `<p class="rp"><b>Sized before day 1.</b> Every bed of one ${8}-bay house was grown day by day through two normal years at ${esc(SITE.name)} with the same rules the simulation uses — planting windows, nursery lead time, off-season rotation crops, temperature- and light-limited growth, heat stress, frost and end-of-season pulls. Year 2's daily harvest was then replayed through the store — greens keep 1–2 weeks and surplus is dried; roots keep about 6 months and are sliced and dried before they go soft; dried beans keep 2 years; meals use whatever expires first, with no more of one staple a day than a full portion (EST 2 kg potatoes, 1.5 kg sweet potatoes, 200 g dry beans) — to find how many such houses leave no day short of <b>${fmt0(kcalNeed)} kcal</b> and <b>${fmt0(protNeed())} g protein</b> — the ${fmt0(T[0])} kcal and ${fmt0(T[1])} g targets less ${fmt0(oilG)} g of bought cooking oil (crops this lean cannot supply the fat)${ap.kcal > 1 ? ` and the ${fmt0(ap.kcal)} kcal and ${fmt0(ap.prot)} g protein a day expected from the ${[DESIGN.hens !== false ? 'eggs' : '', DESIGN.fish !== false ? 'fish' : ''].filter(Boolean).join(' and ')} (85 % of the steady-state model)` : ''}. One house yields ${fmt0(P.kcalHouseDay)} kcal/day on average; the store replay needs <b>${P.kE.toFixed(2)}</b> houses for energy and <b>${P.kP.toFixed(2)}</b> for protein${P.gapE > 0.001 ? ` <span class="warn">(even then ${pct(P.gapE)} of energy can't be grown in the right season and is bought)</span>` : ''}. With a ${Math.round((PLAN_MARGIN - 1) * 100)} % margin for weather, pests and stress that is <b>${P.totalBays} grow bays → ${P.houses} house${P.houses > 1 ? 's' : ''} of ${P.bays} bays</b>${DESIGN.houses || DESIGN.bays ? ` (overridden here: ${farmTxt})` : ''}. ${DESIGN.plan === 'staple' ? 'Beds follow the calorie-first plan: potatoes, sweet potatoes and dry beans, with kale and a little salad.' : 'Beds follow the vegetable-heavy mix; the calorie-first plan (Bed plan → Calorie-first) needs far fewer houses.'}</p>`;
+    h += `<p class="rp"><b>Checked against the simulation.</b> House 1 is simulated plant by plant${FARM.houses > 2 ? `; houses 2–${FARM.houses} follow the same plan on the same days, so the farm's harvest is house 1's × ${FARM.houses}` : FARM.houses === 2 ? `; house 2 follows the same plan on the same days, so the farm's harvest is house 1's × 2` : ''}. ${!fs || fs.mode === 'waiting' ? 'The check starts once a quarter of the year\'s planned harvest has come due.' : fs.mode === 'calibrated' ? `So far the simulated harvest is <b>${pct(fs.ratio)}</b> of what the plan expected for the same days, which puts the need at <b>${fs.housesNeed.toFixed(2)} houses</b>${fs.housesNeed <= FARM.houses ? ' — inside what was built.' : ' — <span class="warn">more than built</span>; at the end of year 1 the owner adds houses (they come into production over about four months).'} Once two years are simulated the check switches to the last 365 days measured directly.` : `Measured on the last 365 days: <b>${fs.housesNeed.toFixed(2)} houses</b> (energy ${fs.kE.toFixed(2)}, protein ${fs.kP.toFixed(2)})${fs.housesNeed <= FARM.houses ? ' — inside what was built.' : ' — <span class="warn">more than built</span>.'}`}${FARM.added.length ? ` The owner added ${FARM.added.map(a => `${a.k} house${a.k > 1 ? 's' : ''} on ${dateStr(a.t)}`).join(', ')}.` : ''} Year 1 starts with an empty store, so until the first staple harvests come in the owner buys rice and beans${FARM.rampKg != null ? ` (${fmt0(FARM.rampKg)} kg in year 1, ${money(FARM.rampKg * INPUT_PRICE.stapleKg)} one-time)` : FOOD.ext.stapleKg > 0.5 ? ` (${fmt0(FOOD.ext.stapleKg)} kg so far)` : ''}; from year 2 the store carries over and the farm, the oil and supplements (B12 and vitamin D, plus calcium and zinc on days the crops fall short) cover every day.</p>`;
     if (big) h += `<table class="rt"><thead><tr><th></th><th>Built · ${farmTxt}</th>${other ? `<th>Measured need · ${R.needHouses} houses</th>` : ''}</tr></thead><tbody>
       <tr><td>Beds / greenhouse floor</td><td>${fmt0(R.growNow * BAY_BED_AREA)} / ${fmt0(des.A)} m²</td>${other ? `<td>${fmt0(R.needBays * BAY_BED_AREA)} / ${fmt0(big.A)} m²</td>` : ''}</tr>
       <tr><td>Electricity use (design year)</td><td>${fmt0(des.annualLoad)} kWh/yr</td>${other ? `<td>${fmt0(big.annualLoad)} kWh/yr</td>` : ''}</tr>
@@ -7648,7 +7716,7 @@ function drawReportCharts() {
 }
 function reportRefresh(force) {
   if (!REPORT.open) return;
-  const now = performance.now(), key = SYS.days.length + '|' + SYS.pvKWp + '|' + SYS.cisternL;
+  const now = performance.now(), key = SYS.nDays + '|' + SYS.pvKWp + '|' + SYS.cisternL;
   if (!force && (now - REPORT.last < 1500 || key === REPORT.key || REPORT.onBtn)) { drawReportCharts(); return; }   // don't rebuild under the pointer
   REPORT.last = now; REPORT.key = key;
   const body = $('rBody'), st = body.scrollTop; body.innerHTML = reportHTML(); body.scrollTop = st;
@@ -7664,10 +7732,10 @@ function reportInit() {
   sel('rHeat', [['hp', 'Heat pump · frost protection'], ['propane', 'Propane · frost protection'], ['none', 'No heat']], DESIGN.heat);
   sel('rCover', [['single', 'Single poly'], ['double', 'Double poly (inflated)']], DESIGN.cover);
   sel('rPlan', [['mixed', 'Mixed vegetables + staples'], ['staple', 'Calorie-first (roots & beans)']], DESIGN.plan);
-  sel('rMarket', [['0', 'None'], ['1', '1 market house'], ['2', '2 market houses'], ['3', '3 market houses'], ['4', '4 market houses'], ['6', '6 market houses'], ['8', '8 market houses']], String(DESIGN.market || 0));
-  sel('rWindN', [['0', 'Auto (only if they pay)'], ['1', '1 turbine'], ['2', '2 turbines'], ['3', '3 turbines'], ['4', '4 turbines'], ['6', '6 turbines']], String(DESIGN.windN || 0));
+  sel('rMarket', [['0', 'None'], ['1', '1 market house'], ['2', '2 market houses'], ['3', '3 market houses'], ['4', '4 market houses'], ['5', '5 market houses'], ['6', '6 market houses'], ['7', '7 market houses'], ['8', '8 market houses']], String(DESIGN.market || 0));
+  sel('rWindN', [['0', 'Auto (only if they pay)'], ['1', '1 turbine'], ['2', '2 turbines'], ['3', '3 turbines'], ['4', '4 turbines'], ['5', '5 turbines'], ['6', '6 turbines'], ['7', '7 turbines'], ['8', '8 turbines']], String(DESIGN.windN || 0));
   $('rApply').onclick = () => setDesign(Object.assign({ loc: $('rLoc').value, heat: $('rHeat').value, cover: $('rCover').value, plan: $('rPlan').value, windN: +$('rWindN').value, market: +$('rMarket').value }, ...SWITCHES.map(s => ({ [s.k]: isOn(s.k) }))));
-  $('sysBtn').onclick = () => { REPORT.open = true; $('report').classList.add('show'); reportRefresh(true); };
+  $('sysBtn').onclick = () => { REPORT.open = true; $('report').classList.add('show'); reportRefresh(true); $('report').focus({ preventScroll: true }); };
   $('rClose').onclick = () => { REPORT.open = false; $('report').classList.remove('show'); };
   $('rYear').onclick = () => simulateYear();
   const rb = $('rBody');   // delegated, so a re-render can't swallow a click
@@ -7686,13 +7754,14 @@ function reportInit() {
 /* run a year of time-lapse in chunks so the page stays responsive */
 function simulateYear() {
   if (REPORT.running) { REPORT.running.stop = true; return; }
-  if (S.mode !== 'running') { if (S.mode === 'deploying' || S.mode === 'packed') skipDeploy(); }
+  if (S.mode === 'deploying' || S.mode === 'packing') skipDeploy();
   const job = REPORT.running = { left: 365 * S.DAY, total: 365 * S.DAY, stop: false };
   const wasPaused = S.paused; S.paused = true; UI.syncSpeed && UI.syncSpeed();
   $('rYear').textContent = 'Stop';
   const tick = () => {
-    if (!job.stop && S.mode !== 'running') { setTimeout(tick, 60); return; }   // let the deploy finish first
+    if (!job.stop && S.mode !== 'running') { if (S.mode === 'packed' && DEP.didInit) startDeploy(); if (S.mode === 'deploying') skipDeploy(); setTimeout(tick, 60); return; }   // packed: redeploy (boot's timer does the first deploy); skip the deploy animation
     if (job.stop || job.left <= 0) { REPORT.running = null; $('rYear').textContent = 'Simulate 1 year'; $('rProg').textContent = job.stop ? 'stopped' : 'done'; S.paused = wasPaused; UI.syncSpeed && UI.syncSpeed(); reportRefresh(true); return; }
+    if (job.left === job.total) settleRobots();   // the arms stand still while the year runs
     const chunk = Math.min(job.left, 4 * S.DAY), m = S.macro; S.macro = true;
     let r = chunk; while (r > 0) { const h = Math.min(r, 300); calendarStep(h, 0); r -= h; }
     S.macro = m; job.left -= chunk;
@@ -7758,7 +7827,7 @@ function cropRows() {
   });
 }
 function animalRows() {
-  const F = FISH, H = HENS, af = SYS.days.length ? 365 / SYS.days.length : 0;
+  const F = FISH, H = HENS, af = SYS.nDays ? 365 / SYS.nDays : 0;
   return [
     { crop: 'Tilapia (fish pool)', start: `${F.STOCK_N} fingerlings of ${F.W0} g every ${F.STOCK_EVERY} d`, first: Math.round((Math.cbrt(F.PLATE) - Math.cbrt(F.W0)) * 3 / F.K), pattern: `one fish at a time from ${F.PLATE} g; oversize (> ${F.BIG} g) shared`,
       perYear: `${fmt0(F.STOCK_N * 0.9 * 365 / F.STOCK_EVERY * 0.45)} kg whole (model)`, kcal100: AFOODS.fish.n100[0], prot100: AFOODS.fish.n100[1], edible: AFOODS.fish.edible,
@@ -7793,7 +7862,7 @@ function exportTables() {
   // summary
   const sum = [
     ['Site', `${SITE.name} (${Math.abs(SITE.lat).toFixed(1)}°${SITE.lat >= 0 ? 'N' : 'S'}, ${SITE.elev} m)`], ['Climate note', SITE.note],
-    ['Simulated', R.n ? `${R.n} days (${dateStr(SYS.days[0].t)} – ${dateStr(SYS.days[R.n - 1].t)})` : 'not started'],
+    ['Simulated', R.n ? `${SYS.nDays} days (${dateAt(0).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} – ${dateAt(SYS.days[R.n - 1].t).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })})` : 'not started'],
     ['Exported', new Date().toLocaleString()],
     ['Person', PROFILES[FOOD.profile].label + ` · ${T[0]} kcal, ${T[1]} g protein a day`],
     ['Farm built', `${farmTxt} · ${fmt0(R.growNow * BAY_BED_AREA)} m² of beds · ${fmt0(des.A)} m² under film`],
@@ -7804,11 +7873,11 @@ function exportTables() {
     [R.year2 ? 'Energy needs met, year 2 on' : 'Energy needs met so far', R.n ? pct(R.kcalMet) : '—'], ['Protein needs met', R.n ? pct(R.protMet) : '—'],
     ['Solar · battery · cistern', `${SYS.pvKWp.toFixed(1)} kWp · ${fmt0(SYS.batKWh / 0.9)} kWh nominal · ${(SYS.cisternL / 1000).toFixed(1)} m³`],
     ['Wind turbines', SYS.nWind ? `${SYS.nWind} × 3 m homebrew · ~${fmt0(des.windYr * SYS.nWind)} kWh/yr` : `none (one would make ~${fmt0(des.windYr)} kWh/yr here)`],
-    ['Night load', `${fmt0(des.nightAvg)} kWh average night · ${fmt0(des.nightMax)} kWh coldest night in 3 synthetic years · generator share ${pct(des.backup || 0)} · solar-first scheduling ${isOn('sched') ? 'on' : 'off'}${des.totes ? ` · heat store ${des.totes * FARM.houses} totes` : ''}`],
+    ['Night load', `${fmt0(des.nightAvg)} kWh average night · ${fmt0(des.nightMax)} kWh coldest night in 3 synthetic years · generator share ${pct(des.backup || 0)} · solar-first scheduling ${isOn('sched') ? 'on' : 'off'}${des.totes ? ` · heat store ${des.totes * (FARM.houses + FARM.market)} totes` : ''}`],
     ['Balance (investment + money in − money out)', `${money(finBalance())} after ${FIN.days.length} days · invested ${money(FIN.invested)}${FARM.market ? ` · ${FARM.market} market houses` : ''}`],
     ['Electricity used (simulated, per year)', R.n ? `${fmt0(SYS.E.load * f)} kWh` : '—'],
   ];
-  const ann = annualCosts(R, 1), cap = capitalCosts(des, R.growNow, FARM.houses, true);
+  const ann = annualCosts(R, 1), cap = capitalCosts(des, R.growNow + FARM.bays * FARM.market, FARM.houses + FARM.market, true);
   sum.push(['Outside inputs per year', money(ann.reduce((s, r) => s + r.v, 0))], ['Build cost, DIY parts · installed', `${money(cap.reduce((s, r) => s + r.diy, 0))} · ${money(cap.reduce((s, r) => s + r.inst, 0))}`]);
   t.push({ name: 'Summary', cols: ['Item', 'Value'], rows: sum, widths: [36, 90] });
   // crops
@@ -7845,7 +7914,7 @@ function exportTables() {
   // daily log
   t.push({ name: 'Daily log', cols: ['Date', 'Day', 'Energy met (farm + oil, 1 = 100 %)', 'Protein met', 'Farm kcal', 'Oil kcal', 'Bought staples kcal', 'Animal kcal', 'Animal protein g', 'Food in store, days', ...cropKeys.map(c => `${CROPS[c].label}, kg`), 'Eggs, kg', 'Fish, kg', 'Solar kWh', 'Wind kWh', 'Used kWh', 'Backup kWh', 'Grid kWh', 'Battery low %', 'Cistern L', 'Rain L', 'Used L', 'Bought L', 'Inside min °C', 'Inside max °C', 'Outside mean °C', 'Snow on ground cm', 'Soil N available kg', 'Fish in pool', 'Hens', ...BUY_CATS.map(c => `${c[0]} $`), 'Components off'],
     rows: SYS.days.map(d => [isoDate(d.t), d.d, r2(d.planPct, 3), r2(d.protPct, 3), r2(d.kcal, 0), r2(d.oilKcal, 0), r2(d.stapleKcal, 0), r2(d.aKcal || 0, 0), r2(d.aProt || 0, 1), r2(d.storeDays, 1), ...cropKeys.map(c => r2((d.hk || {})[c] || 0, 2)), r2(d.ak && d.ak.egg || 0, 3), r2(d.ak && d.ak.fish || 0, 3), r2(d.pv, 2), r2(d.wind || 0, 2), r2(d.load, 2), r2(d.unmet, 2), r2(d.grid || 0, 2), r2(d.socMin * 100, 0), r2(d.cistern, 0), r2(d.rainL, 0), r2(d.useL, 0), r2(d.bought, 0), r2(d.Tmin, 1), r2(d.Tmax, 1), r2(d.Tout, 1), r2(d.snow, 1), r2(d.soilN || 0, 2), d.fishN || 0, d.hens || 0, ...(d.buy || BUY_CATS.map(() => 0)).map(v => r2(v, 2)), d.on ? Object.entries(d.on).filter(([, v]) => !v).map(([k]) => swLabel(k)).join(', ') : '']),
-    widths: [11, 6, ...Array(8).fill(11), ...cropKeys.map(() => 10), ...Array(20).fill(10), ...BUY_CATS.map(() => 9), 24] });
+    widths: [11, 6, ...Array(8).fill(11), ...cropKeys.map(() => 10), ...Array(19).fill(10), ...BUY_CATS.map(() => 9), 24] });
   // energy design
   t.push({ name: 'Energy design', cols: ['Month', 'Design load kWh/day', 'PV yield kWh/kWp·day', 'Rain mm', 'Water use L/day'], rows: des.month.map((m, i) => [new Date(2026, i, 1).toLocaleDateString('en-US', { month: 'short' }), r2(m.load / m.days, 1), r2(m.pv1 / m.days, 2), SITE.mm[i], r2(m.use / m.days, 0)]), widths: [8, 18, 18, 10, 14],
     note: `Design year from climate normals. PV ${SYS.pvKWp.toFixed(1)} kWp + ${fmt0(SYS.batKWh)} kWh usable${SYS.nWind ? ` + ${SYS.nWind} wind turbine${SYS.nWind > 1 ? 's' : ''}` : ''} sized on three synthetic years${des.backup ? `, ${pct(des.backup)} of load left to a generator` : ''}. Average night ${fmt0(des.nightAvg)} kWh, worst ${fmt0(des.nightMax)} kWh.` });
@@ -7972,14 +8041,14 @@ section.wide table{font-size:8.5px}section{break-inside:auto}tr{break-inside:avo
 .figs{display:grid;grid-template-columns:1fr 1fr;gap:8px}figure{margin:0;break-inside:avoid}figure.full{grid-column:1/-1}figcaption{font-weight:600;margin:0 0 2px}figure img{width:100%;display:block;border-radius:4px}
 </style></head><body>
 <div class="noprint"><button onclick="window.print()">Print / save as PDF</button>The daily log is in the spreadsheet export.</div>
-<h1>Agri-Rail · self-sufficiency report</h1><p class="sub">${esc(SITE.name)} · ${esc(FARM.houses + ' houses × ' + FARM.bays + ' bays')} · ${SYS.days.length} simulated days · exported ${esc(new Date().toLocaleString())}</p>
+<h1>Agri-Rail · self-sufficiency report</h1><p class="sub">${esc(SITE.name)} · ${esc(FARM.houses + (FARM.houses > 1 ? ' houses × ' : ' house × ') + FARM.bays + ' bays')} · ${SYS.nDays} simulated days · exported ${esc(new Date().toLocaleString())}</p>
 ${extra}${body}</body></html>`;
 }
 function download(blob, name) {
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
   setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
 }
-const exportName = ext => `agri-rail-${DESIGN.loc}-day${SYS.days.length}.${ext}`;
+const exportName = ext => `agri-rail-${DESIGN.loc}-day${SYS.nDays}.${ext}`;
 function exportXLSX() { download(xlsxBlob(exportTables()), exportName('xlsx')); log('sys', 'Exported the simulation data as a spreadsheet', true); }
 function exportHTML() { download(new Blob([printableHTML(exportTables())], { type: 'text/html' }), exportName('html')); }
 /* the report's charts as images (dark panels, so they print the same with or without background graphics) */
@@ -8069,6 +8138,7 @@ function startDeploy() {
   log('sys', `Deploy sequence started · ${G.modules.length} crates on pad`);
 }
 function skipDeploy() {
+  if (S.mode === 'packed' && !DEP.didInit) startDeploy();
   if (S.mode === 'deploying') { DEP.T = 999; for (const a of G.arms) { a.build = 1; a.parkBlend = 0.01; } }
   if (S.mode === 'packing') { DEP.pk.stage = 'modules'; DEP.pk.T = 999; for (const a of G.arms) { a.build = 0; a.parkBlend = 1; a.actions = []; a.setVisible(false); } }
 }
@@ -8157,13 +8227,19 @@ function updateDeployOverlay() {
 
 /* ---------- live bay add / remove ---------- */
 function bayCount(w) { return G.modules.filter(m => m.wing === w && m.kind === 'grow' && !m.removing).length; }
+function bayResync() {   // houses 2..N and market houses follow house 1's live bay count
+  FARM.bays = G.modules.filter(m => m.kind === 'grow' && !m.removing).length;
+  planActual(); marketInit();
+  _fsC.n = -1; REPORT.cache.foodN = -1; REPORT.cache.bigKey = null;
+  if (REPORT.open) reportRefresh(true);
+}
 function addBay() {
   if (S.mode !== 'running' || G.modules.some(m => m.growing || m.removing)) return;
   let wing = bayCount('A') <= bayCount('B') ? 'A' : 'B';
   if (bayCount(wing) >= 4) wing = wing === 'A' ? 'B' : 'A';
   if (bayCount(wing) >= 4) { log('sys', 'Maximum length reached (8 grow bays)'); return; }
   const m = new Module('grow', wing, bayCount(wing));
-  m.build = 0; m.growing = true; G.modules.push(m); planBeds(m, S.t);
+  m.build = 0; m.growing = true; G.modules.push(m); planBeds(m, S.t); bayResync();
   m.applyBuild(0);
   log('sys', `Bay ${m.id} crate placed at ${wing === 'A' ? 'west' : 'east'} end → unfolding`);
   updatePad();
@@ -8173,7 +8249,7 @@ function removeBay() {
   const wing = bayCount('A') >= bayCount('B') ? 'A' : 'B';
   if (bayCount(wing) <= 1) { log('sys', 'Each wing keeps at least one grow bay'); return; }
   const m = G.modules.filter(x => x.wing === wing && x.kind === 'grow' && !x.removing).sort((a, b) => b.index - a.index)[0];
-  m.removing = true;
+  m.removing = true; bayResync();
   for (const t of [...G.tasks]) if (t.p && t.p.z >= m.z0 - 0.05 && t.p.z <= m.z1 + 0.05) cancelTask(t, 'bay removed');
   if (G.coop) { const z = G.coop.task.p ? G.coop.task.p.z : 0; if (z >= m.z0 && z <= m.z1) endCoop(false); }
   for (const b of [...G.bugs]) if (b.plant.spot.bed.module === m) b.kill(false);
@@ -8183,6 +8259,9 @@ function removeBay() {
 function disposeModule(m) {
   scene.remove(m.group);
   for (const c of m.cams) c.cone.parent && c.cone.parent.remove(c.cone);
+  disposeTree(m.group); for (const c of m.cams) disposeTree(c.cone);
+  for (const k of ['curtains', 'haf', 'exhaust', 'louvers', 'pads', 'shades']) CLIMATE.hw[k] = CLIMATE.hw[k].filter(e => e.module !== m);
+  for (let i = COMP_OBJS.length - 1; i >= 0; i--) { let o = COMP_OBJS[i]; while (o.parent) o = o.parent; if (o === m.group) COMP_OBJS.splice(i, 1); }
   G.beds = G.beds.filter(b => b.module !== m);
   G.cams = G.cams.filter(c => c.module !== m);
   G.modules = G.modules.filter(x => x !== m);
@@ -8192,7 +8271,7 @@ function disposeModule(m) {
 function updatePad() {
   const zs = G.modules.map(m => [m.z0, m.z1]).flat();
   const z0 = Math.min(...zs), z1 = Math.max(...zs);
-  const w = (FARM.houses - 1) * PITCH + 12; G.pad.scale.set(w, 1, z1 - z0 + 7); G.pad.position.set(1.2 + (FARM.houses - 1) * PITCH / 2, 0.012, (z0 + z1) / 2);
+  const n = nGH(), w = (n - 1) * PITCH + 12; G.pad.scale.set(w, 1, z1 - z0 + 7); G.pad.position.set(1.2 + (n - 1) * PITCH / 2, 0.012, (z0 + z1) / 2);
 }
 
 /* ---------- scenarios ---------- */
@@ -8217,7 +8296,7 @@ function scenario(kind) {
   if (kind === 'coop') {
     if (G.coop) { log('ai', 'A co-op lift is already in progress'); return; }
     const pumps = plantsAll().filter(p => p.crop === 'pumpkin');
-    let p = pumps.find(q => q.fruits.some(f => f.big && f.state === 'on')) || pumps[0];
+    let p = pumps.find(q => q.fruits.some(f => f.big && f.state === 'on')) || pumps.find(q => !q.dead && q.age < q.spec.fruitSets[q.spec.fruitSets.length - 1] + q.spec.ripen);
     if (!p) {
       const spot = G.beds.filter(b => b.crop === 'pumpkin' && b.module.ready()).flatMap(b => b.spots).find(s => !s.plant);
       if (!spot) { log('ai', 'No pumpkin bed available'); return; }
@@ -8227,14 +8306,17 @@ function scenario(kind) {
     if (p.task) cancelTask(p.task, 'scenario');
     if (!p.fruits.some(f => f.big && f.state === 'on')) seedHistory(p, Math.max(p.age, p.spec.fruitSets[0] + 0.5));
     const f = p.fruits.find(x => x.big && x.state === 'on');
+    if (!f) { log('ai', 'No pumpkin can be brought to maturity'); return; }
     p.age = Math.min(p.spec.life - 1, f.formed + p.spec.ripen + 0.05); p.update(0);
     log('sys', `Scenario: pumpkin on ${p.id} brought to maturity (skips ${Math.round(p.spec.ripen)} days of growth)`);
   }
 }
 
 /* ---------- person in the greenhouse (safety interlock) ---------- */
+let PERSON = null;   // built once, reused on every visit
 function makePerson() {
-  const g = new THREE.Group();
+  if (PERSON) return PERSON;
+  const g = PERSON = new THREE.Group();
   const vest = MS({ color: 0xff7a1a, roughness: 0.6 }), jeans = MS({ color: 0x2c3e5a, roughness: 0.9 }), skin = MS({ color: 0xd8a27c, roughness: 0.7 });
   const legs = [];
   for (const s of [-1, 1]) { const piv = new THREE.Group(); piv.position.set(s * 0.1, 0.9, 0); piv.add(boxMesh(0.13, 0.88, 0.15, jeans, 0, -0.44, 0)); g.add(piv); legs.push(piv); }
@@ -8306,7 +8388,7 @@ function updateHuman(dt) {
 /* ---------- sim step ----------
    Real time (≤30×): everything advances together in 40 ms steps.
    Time-lapse (>30×): the calendar (crops, pests, moisture, food) advances in steps of up to 10 min,
-   while the arms keep working on screen at ≤10× and any task they can't reach within 30 sim-minutes
+   while the arms keep working on screen at ≤10× and any task they can't reach within 10 sim-minutes
    is executed directly — two arms have far more real-time capacity than the ~50–150 daily tasks need. */
 let handAcc = 0, maintAcc = 0, planAcc = 0;
 function sprayEffect(a, h) {
@@ -8354,6 +8436,7 @@ function macroAdvance(rdt) {
 
 /* ---------- render ---------- */
 let last = performance.now(), frameN = 0, pipRectCache = null;
+$('right').addEventListener('scroll', () => { pipRectCache = null; }, { passive: true });
 function render() {
   renderer.setScissorTest(false);
   renderer.setViewport(0, 0, innerWidth, innerHeight);
@@ -8366,7 +8449,7 @@ function render() {
     if (src) {
       const cam = src.cam; cam.aspect = r.w / r.h; cam.updateProjectionMatrix();
       const y = innerHeight - r.y - r.h;
-      renderer.setViewport(r.x, y, r.w, r.h); renderer.setScissor(r.x, y, r.w, r.h); renderer.setScissorTest(true);
+      renderer.setViewport(r.x, y, r.w, r.h); renderer.setScissor(r.x, innerHeight - r.cy - r.ch, r.w, r.ch); renderer.setScissorTest(true);
       renderer.render(scene, cam);
       renderer.setScissorTest(false); renderer.setViewport(0, 0, innerWidth, innerHeight);
     }
@@ -8423,7 +8506,7 @@ function onResize() {
   for (let i = 0; i < nA; i++) { G.modules.push(new Module('grow', 'A', i)); if (i < nB) G.modules.push(new Module('grow', 'B', i)); }
   for (const m of G.modules) if (m.kind === 'grow') planBeds(m, 0);
   climateSpinup();
-  designSystem();
+  designSystem(); finInvest('build');   // the balance starts at minus the build cost (help text), not +$0 until the first supper
   if (isOn('fish')) fishStart(); if (isOn('hens')) hensStart();
   for (const [id, side, col] of [['A', -1, 0xff9a3c], ['B', 1, 0x3cc8d8]]) {
     const a = new Arm(id, side, col); G.arms.push(a);
@@ -8437,17 +8520,18 @@ function onResize() {
   exportInit();
   setView('orbit'); orbit.gr = 27; orbit.r = 40; orbit.gph = 1.02; orbit.ph = 0.9; orbit.th = 1.4; orbit.touched = false;
   window.addEventListener('resize', onResize); onResize();
+  new ResizeObserver(() => { document.documentElement.style.setProperty('--topb', Math.round($('top').getBoundingClientRect().bottom) + 'px'); pipRectCache = null; }).observe($('top'));   // the bar can wrap once the clock and balance fill in
   log('sys', `Farm sized for one person: ${FARM.houses} house${FARM.houses > 1 ? 's' : ''} × ${FARM.bays} grow bays (${FARM.houses * FARM.bays * 3} beds, ${fmt0(FARM.houses * FARM.bays * BAY_BED_AREA)} m²) · house 1 is shown plant by plant`, true);
   const offs = SWITCHES.filter(s => !isOn(s.k)).map(s => s.label.toLowerCase());
   log('sys', `${isOn('fish') ? `Fish pool stocked with ${FISH.STOCK_N} tilapia fingerlings (more every ${Math.round(FISH.STOCK_EVERY / 7)} weeks)` : 'No fish pool'} · ${isOn('hens') ? `${HENS.N} laying pullets in the coop` : 'no chickens'}${offs.length ? ` · switched off: ${offs.join(', ')}` : ''}`, true);
   $('depNote').textContent = `${G.modules.length} crates per house · 3.0 × 1.25 × 2.25 m each · ${FARM.houses > 1 ? FARM.houses + ' houses' : 'one house'}`;
   requestAnimationFrame(frame);
-  setTimeout(startDeploy, 900);
+  setTimeout(() => { if (S.mode === 'packed' && !DEP.didInit) startDeploy(); }, 900);
 })();
 /* console access for tinkering: AGRI.S, AGRI.G, AGRI.scenario('pest') … */
 window.AGRI = { FIN, MKT, finProjection, marketYear, SEEDBANK, WASTE, SALE, SEED_SAVE, seedAnnualUse, createPackJob, plantsAll, FISH, HENS, ON, ON_LOG, setSwitch, isOn, SOIL, animalPlan, AFOODS, synthPV, pvPerKWp, sunDir, S, G, FOOD, CROPS, CLIMATE, NURSERY, TN, SITE, DESIGN, LOCATIONS, FARM, paperSize, paperPlan, HIST, compDef, pickAt, SYS, designSystem, simSizing, foodSizing, HOUSE, windowText, plantingScore, dateStr, setDesign, outsideAt, climateStep, tunnelClimatology, normalMean, CL_HEAT_W, WFX, GEO, nurseryPlan, windowOpen, cam: () => camera, V3, plantsAll, Plant, selectPlant, plantStage, nextHarvestIn, setView, scenario, addBay, removeBay, startPack, startDeploy, skipDeploy, toggleHuman, orbit, UI, cropExpect, dietTargets };
 /* jump ahead without rendering: AGRI.fastForward(30 * 86400) runs 30 days in time-lapse mode */
-window.AGRI.fastForward = (sec) => { const m = S.macro; S.macro = true; let r = sec; while (r > 0) { const h = Math.min(r, 300); calendarStep(h, 0); r -= h; } S.macro = m; return S.t; };
+window.AGRI.fastForward = (sec) => { settleRobots(); const m = S.macro; S.macro = true; let r = sec; while (r > 0) { const h = Math.min(r, 300); calendarStep(h, 0); r -= h; } S.macro = m; return S.t; };
 
 })();
 </script>
